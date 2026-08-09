@@ -210,14 +210,14 @@
     .icon-btn{width:44px}
     .app{
       display:grid;
-      grid-template-columns:86px minmax(0,1fr);
+      grid-template-columns:0 minmax(0,1fr);
       min-height:100vh;
       max-width:1540px;
       margin:0 auto;
       transition:grid-template-columns .22s ease;
     }
     .app.sidebar-collapsed{
-      grid-template-columns:86px minmax(0,1fr);
+      grid-template-columns:0 minmax(0,1fr);
     }
     .app.sidebar-open{grid-template-columns:240px minmax(0,1fr)}
     .sidebar{
@@ -229,10 +229,17 @@
       overflow:hidden;
       transition:padding .22s ease;
     }
+    .app:not(.sidebar-open) .sidebar{
+      width:0;
+      padding:0;
+      overflow:visible;
+      background:transparent;
+    }
     .sidebar-toggle{
-      position:absolute;
-      right:18px;
+      position:fixed;
+      left:18px;
       top:18px;
+      z-index:50;
       width:42px;
       height:42px;
       display:grid;
@@ -285,25 +292,14 @@
       color:var(--ink);
       box-shadow:var(--soft-shadow);
     }
-    .app:not(.sidebar-open) .sidebar{padding:24px 12px}
-    .app:not(.sidebar-open) .brand{justify-content:center;margin-top:34px}
+    .app:not(.sidebar-open) .brand{display:none}
     .app:not(.sidebar-open) .brand>div:last-child,
     .app:not(.sidebar-open) .side-title,
     .app:not(.sidebar-open) .side-desc,
     .app:not(.sidebar-open) .side-clover,
-    .app:not(.sidebar-open) .menu span{display:none}
-    .app:not(.sidebar-open) .menu{left:12px;right:12px;bottom:24px}
-    .app:not(.sidebar-open) .menu button{
-      justify-content:center;
-      padding:0;
-      font-size:0;
-    }
-    .app:not(.sidebar-open) .menu button:before{
-      content:attr(data-short);
-      font-size:15px;
-      font-weight:950;
-    }
-    .main{min-width:0;padding:22px 28px 70px}
+    .app:not(.sidebar-open) .menu{display:none}
+    .main{min-width:0;padding:20px 28px 64px}
+    .app:not(.sidebar-open) .main{padding-left:72px}
     .topbar{
       display:flex;
       align-items:center;
@@ -457,9 +453,9 @@
       font-size:12px;
       font-weight:950;
     }
-    .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px}
-    .section-head h2{font-size:28px;letter-spacing:0}
-    .section-head p{max-width:760px;margin-top:6px;color:var(--sub);line-height:1.5;font-weight:680}
+    .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:14px}
+    .section-head h2{font-size:24px;letter-spacing:0}
+    .section-head p{max-width:760px;margin-top:4px;color:var(--sub);line-height:1.45;font-weight:680;font-size:13px}
     .tabs{display:flex;gap:8px;margin:0 0 18px}
     .tabs button{
       height:40px;
@@ -635,6 +631,17 @@
     }
     .step-field textarea{min-height:58px}
     .step-field.wide{grid-column:1/-1}
+    .map-actions{display:flex;gap:6px;margin-top:6px}
+    .map-actions button{
+      height:30px;
+      padding:0 9px;
+      border-radius:10px;
+      background:#eefbef;
+      color:var(--clover-deep);
+      font-size:11px;
+      font-weight:950;
+      border:1px solid #d6f3d8;
+    }
     .candidate-focus{
       margin-top:12px;
       padding:12px;
@@ -664,11 +671,11 @@
     .guest-table td input,.guest-table td select{min-height:38px;padding:0 9px;border-radius:12px}
     .budget-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
     .overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
-    .stat{min-height:126px;border-radius:24px;padding:18px}
-    .stat strong{display:block;margin-top:9px;font-size:28px;letter-spacing:0}
+    .stat{min-height:104px;border-radius:20px;padding:15px}
+    .stat strong{display:block;margin-top:7px;font-size:24px;letter-spacing:0}
     .stat small{display:block;margin-top:7px;color:var(--sub);line-height:1.4}
     .two-col{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:18px;align-items:start}
-    .panel{border-radius:30px;padding:22px}
+    .panel{border-radius:24px;padding:18px}
     .table{width:100%;border-collapse:separate;border-spacing:0 9px}
     .table th{padding:0 12px 4px;color:var(--sub);font-size:12px;text-align:left;font-weight:950}
     .table td{padding:14px 12px;background:#fbfbfa;border-top:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:middle}
@@ -718,8 +725,8 @@
     .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
     .price{text-align:right;font-weight:950}
     .graph-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-    .graph-card{min-height:230px;border-radius:28px;padding:20px}
-    .graph-card h3{font-size:18px;margin-bottom:12px}
+    .graph-card{min-height:190px;border-radius:24px;padding:18px}
+    .graph-card h3{font-size:17px;margin-bottom:10px}
     .donut-wrap{display:flex;align-items:center;gap:18px}
     .donut{
       --p:0;
@@ -848,7 +855,7 @@
         <div class="jj-logo">JJ</div>
         <div class="clover"><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="stem"></i></div>
         <h1>JJ의 행복한 결혼생활</h1>
-        <p>우리의 미래를 더 예쁘게 준비하는 작은 홈. 결혼식, 신혼집, 돈 모으기를 행운처럼 차곡차곡 쌓아가요.</p>
+        <p>우리의 미래를 더 예쁘게 준비하는 작은 홈. 결혼식, 신혼집, 가계부를 행운처럼 차곡차곡 쌓아가요.</p>
       </div>
       <div class="login-form">
         <h2>JJ의 행복한 결혼생활</h2>
@@ -866,13 +873,13 @@
       <button class="sidebar-toggle" id="sidebarToggle" title="메뉴 열기">›</button>
       <div class="brand"><div class="jj-logo">JJ</div><div>JJ의 행복한 결혼생활<small>박수진 & 이재준</small></div></div>
       <div class="side-title">행운처럼<br>쌓이는 우리.</div>
-      <p class="side-desc">결혼식, 집, 돈 모으기를 따로 보되 마지막엔 하나의 생활 자금으로 연결해요.</p>
+      <p class="side-desc">결혼식, 집, 가계부를 따로 보되 마지막엔 하나의 생활 자금으로 연결해요.</p>
       <div class="side-clover clover"><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="stem"></i></div>
       <nav class="menu">
         <button class="active" data-screen="home" data-short="홈">홈 <span>01</span></button>
         <button data-screen="wedding" data-short="식">결혼식 준비 <span>02</span></button>
         <button data-screen="house" data-short="집">집 준비 <span>03</span></button>
-        <button data-screen="money" data-short="돈">돈 모으기 <span>04</span></button>
+        <button data-screen="money" data-short="계">가계부 <span>04</span></button>
       </nav>
     </aside>
 
@@ -926,7 +933,7 @@
       </section>
 
       <section class="screen" id="wedding">
-        <div class="section-head"><div><h2>결혼식 준비</h2><p>엑셀 체크리스트 흐름을 기준으로 단계별 작업을 열고, 예산과 보증인원은 별도 탭에서 표처럼 직접 씁니다.</p></div></div>
+        <div class="section-head"><div><h2>결혼식 준비</h2></div></div>
         <div class="tabs">
           <button class="active" data-wtab="checklist">결혼준비체크리스트</button>
           <button data-wtab="guest">결혼식 보증인원 및 식대 계산기</button>
@@ -986,7 +993,7 @@
       </section>
 
       <section class="screen" id="house">
-        <div class="section-head"><div><h2>집 준비</h2><p>매매/전세 후보와 LH/SH 공고를 따로 기록하고, 선택했을 때 한 달에 나가는 돈까지 같이 봅니다.</p></div><button class="primary" id="addHouse">집 후보 추가</button></div>
+        <div class="section-head"><div><h2>집 준비</h2></div><button class="primary" id="addHouse">집 후보 추가</button></div>
         <div class="overview">
           <div class="stat"><span>선택 집 후보</span><strong id="houseSelectedCount">0개</strong><small>최종 선택 체크 기준</small></div>
           <div class="stat"><span>예상 월 비용</span><strong id="houseMonthly">월 0원</strong><small>선택 후보 합계</small></div>
@@ -998,7 +1005,7 @@
       </section>
 
       <section class="screen" id="money">
-        <div class="section-head"><div><h2>돈 모으기</h2><p>결혼 전 가용 가능한 돈, 매월 모을 수 있는 돈, 각자 용돈과 실제 지출을 누적해서 봅니다.</p></div><button class="primary" id="addLedger">내역 추가</button></div>
+        <div class="section-head"><div><h2>가계부</h2></div><button class="primary" id="addLedger">내역 추가</button></div>
         <div class="overview">
           <div class="stat"><span>총 모은 돈</span><strong id="moneyTotal">0원</strong><small>각자 + 공동통장</small></div>
           <div class="stat"><span>월 저축 가능액</span><strong id="moneyMonthly">0원</strong><small>입력 기준</small></div>
@@ -1006,23 +1013,27 @@
           <div class="stat"><span>선택 후 여유</span><strong id="moneyFree">0원</strong><small>후보 선택 반영</small></div>
         </div>
         <div class="saving-layout">
-          <div class="graph-card"><h3>모은 돈 비율</h3><div class="bar-list" id="savingBars"></div></div>
-          <div class="panel"><h2 style="font-size:22px;margin-bottom:14px">기본 돈 설정</h2><div class="saving-form">
-            <div class="field"><label>수진이 모은 돈</label><input type="number" id="mySavings"></div>
-            <div class="field"><label>재준이 모은 돈</label><input type="number" id="partnerSavings"></div>
+          <div class="graph-card"><h3>자산/저축 비율</h3><div class="bar-list" id="savingBars"></div></div>
+          <div class="panel"><h2 style="font-size:18px;margin-bottom:12px">자산/저축 설정</h2><div class="saving-form">
+            <div class="field"><label>신부 현재 모은 돈</label><input type="number" id="mySavings"></div>
+            <div class="field"><label>신랑 현재 모은 돈</label><input type="number" id="partnerSavings"></div>
             <div class="field"><label>공동통장</label><input type="number" id="jointSavings"></div>
-            <div class="field"><label>매월 저축 가능액</label><input type="number" id="monthlySavings"></div>
+            <div class="field"><label>매월 함께 저축 가능액</label><input type="number" id="monthlySavings"></div>
+            <div class="field"><label>신부 매월 저축 가능액</label><input type="number" id="myMonthlySavings"></div>
+            <div class="field"><label>신랑 매월 저축 가능액</label><input type="number" id="partnerMonthlySavings"></div>
             <div class="field"><label>수진 용돈/고정지출</label><input type="number" id="myAllowance"></div>
             <div class="field"><label>재준 용돈/고정지출</label><input type="number" id="partnerAllowance"></div>
+            <div class="field"><label>주 저축 계좌/카드</label><input id="savingAccount" placeholder="예: 토스뱅크, 카카오뱅크, 신한카드"></div>
+            <div class="field"><label>현재까지 이자</label><input type="number" id="interestSaved"></div>
           </div></div>
         </div>
-        <div class="panel" style="margin-top:18px"><h2 style="font-size:22px;margin-bottom:14px">월별 돈 흐름</h2><div class="bar-list" id="monthlyBars"></div></div>
-        <div class="panel" style="margin-top:18px"><table class="table ledger-table"><thead><tr><th>월</th><th>내역</th><th>금액</th><th>구분</th><th>담당</th><th>삭제</th></tr></thead><tbody id="ledgerTable"></tbody></table></div>
+        <div class="panel" style="margin-top:16px"><h2 style="font-size:18px;margin-bottom:12px">월별 가계부 흐름</h2><div class="bar-list" id="monthlyBars"></div></div>
+        <div class="panel" style="margin-top:16px"><table class="table ledger-table"><thead><tr><th>월</th><th>내역</th><th>금액</th><th>구분</th><th>담당</th><th>계좌/카드</th><th>이자</th><th>삭제</th></tr></thead><tbody id="ledgerTable"></tbody></table></div>
       </section>
     </main>
   </div>
 
-  <nav class="bottom-tabs"><button class="active" data-screen="home">홈</button><button data-screen="wedding">결혼식</button><button data-screen="house">집</button><button data-screen="money">돈</button></nav>
+  <nav class="bottom-tabs"><button class="active" data-screen="home">홈</button><button data-screen="wedding">결혼식</button><button data-screen="house">집</button><button data-screen="money">가계부</button></nav>
 
   <div class="modal" id="detailModal">
     <div class="modal-card">
@@ -1087,7 +1098,7 @@
     const pct = (a,b) => !b ? 0 : Math.max(0, Math.min(100, Math.round((Number(a)||0)/(Number(b)||1)*100)));
     const defaults = {
       profile:{meName:"박수진",partnerName:"이재준",season:"2026년 11-12월"},
-      money:{mySavings:18000000,partnerSavings:22000000,jointSavings:8000000,monthlySavings:3000000,myAllowance:800000,partnerAllowance:800000},
+      money:{mySavings:18000000,partnerSavings:22000000,jointSavings:8000000,monthlySavings:3000000,myMonthlySavings:1500000,partnerMonthlySavings:1500000,myAllowance:800000,partnerAllowance:800000,savingAccount:"",interestSaved:0},
       prep:[
         {id:"p01",order:"01",period:"시작",category:"첫인사",title:"재준 부모님 첫인사",memo:"장소, 예산, 준비물, 중요내용을 따로 기록해요.",status:"todo",needsCandidate:false,subtasks:[{title:"장소",status:"todo"},{title:"예산",status:"todo"},{title:"준비물",status:"todo"},{title:"중요내용",status:"todo"}]},
         {id:"p02",order:"02",period:"시작",category:"첫인사",title:"수진 부모님 첫인사",memo:"장소, 예산, 준비물, 중요내용을 따로 기록해요.",status:"todo",needsCandidate:false,subtasks:[{title:"장소",status:"todo"},{title:"예산",status:"todo"},{title:"준비물",status:"todo"},{title:"중요내용",status:"todo"}]},
@@ -1181,9 +1192,9 @@
         {id:"h2",kind:"house",category:"LH/SH",name:"LH/SH 공고 후보",quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",monthly:0,selected:false,memo:"공고 링크, 서류, 접수 상태 기록",photo:""}
       ],
       ledger:[
-        {id:"l1",month:"2026-08",name:"공동통장 입금",amount:3000000,type:"저축",who:"함께"},
-        {id:"l2",month:"2026-08",name:"웨딩홀 계약금",amount:1000000,type:"지출",who:"공동"},
-        {id:"l3",month:"2026-09",name:"집 준비금 적립",amount:1500000,type:"저축",who:"함께"}
+        {id:"l1",month:"2026-08",name:"공동통장 입금",amount:3000000,type:"저축",who:"함께",account:"",interest:0},
+        {id:"l2",month:"2026-08",name:"웨딩홀 계약금",amount:1000000,type:"지출",who:"공동",account:"",interest:0},
+        {id:"l3",month:"2026-09",name:"집 준비금 적립",amount:1500000,type:"저축",who:"함께",account:"",interest:0}
       ]
     };
     let state = JSON.parse(localStorage.getItem(KEY)||"null") || structuredClone(defaults);
@@ -1206,7 +1217,7 @@
       state.houses = Array.isArray(state.houses) ? state.houses : structuredClone(defaults.houses);
       state.programs = Array.isArray(state.programs) ? state.programs : structuredClone(defaults.programs);
       state.ledger = Array.isArray(state.ledger) ? state.ledger : structuredClone(defaults.ledger);
-      state.ledger.forEach(item => item.month ||= new Date().toISOString().slice(0,7));
+      state.ledger.forEach(item => { item.month ||= new Date().toISOString().slice(0,7); item.account ||= ""; item.interest ||= 0; });
       let currentPrep = Array.isArray(state.prep) ? state.prep : [];
       if (currentPrep.length < 10 && !currentPrep.some(item => item.id === "p01")) currentPrep = [];
       if (!currentPrep.some(item => item.title === "재준 부모님 첫인사")) currentPrep = [];
@@ -1297,7 +1308,7 @@
       });
       if (showMessage) alert("Supabase에 저장됐어요.");
     }
-    const totalMoney = () => Number(state.money.mySavings||0)+Number(state.money.partnerSavings||0)+Number(state.money.jointSavings||0);
+    const totalMoney = () => Number(state.money.mySavings||0)+Number(state.money.partnerSavings||0)+Number(state.money.jointSavings||0)+Number(state.money.interestSaved||0);
     const selectedWedding = () => state.wedding.filter(x=>x.selected);
     const selectedHouses = () => state.houses.filter(x=>x.selected);
     const weddingCost = () => selectedWedding().reduce((s,x)=>s+Number(x.actual||x.quote||0),0);
@@ -1312,21 +1323,24 @@
       $(screen).classList.add("active");
       document.querySelectorAll("[data-screen]").forEach(x=>x.classList.toggle("active",x.dataset.screen===screen));
       document.querySelector(".topbar")?.classList.toggle("is-hidden", screen !== "home");
+      const app = document.querySelector(".app");
+      app?.classList.toggle("sidebar-open", screen === "home");
+      updateSidebarToggle();
       window.scrollTo({top:0,behavior:"smooth"});
     }
     document.querySelectorAll("[data-screen]").forEach(x=>x.onclick=()=>nav(x.dataset.screen));
-    if (localStorage.getItem(SIDEBAR_KEY) === "1") document.querySelector(".app")?.classList.add("sidebar-open");
     $("sidebarToggle").onclick = () => {
       const app = document.querySelector(".app");
       app.classList.toggle("sidebar-open");
-      const opened = app.classList.contains("sidebar-open");
-      $("sidebarToggle").textContent = opened ? "‹" : "›";
-      $("sidebarToggle").title = opened ? "메뉴 접기" : "메뉴 열기";
-      localStorage.setItem(SIDEBAR_KEY, opened ? "1" : "0");
+      updateSidebarToggle();
     };
-    const sidebarOpened = document.querySelector(".app")?.classList.contains("sidebar-open");
-    $("sidebarToggle").textContent = sidebarOpened ? "‹" : "›";
-    $("sidebarToggle").title = sidebarOpened ? "메뉴 접기" : "메뉴 열기";
+    function updateSidebarToggle(){
+      const opened = document.querySelector(".app")?.classList.contains("sidebar-open");
+      $("sidebarToggle").textContent = opened ? "‹" : "☰";
+      $("sidebarToggle").title = opened ? "메뉴 접기" : "메뉴 열기";
+    }
+    document.querySelector(".app")?.classList.add("sidebar-open");
+    updateSidebarToggle();
     document.querySelectorAll("[data-wtab]").forEach(btn=>btn.onclick=()=>{
       document.querySelectorAll("[data-wtab]").forEach(x=>x.classList.toggle("active",x.dataset.wtab===btn.dataset.wtab));
       document.querySelectorAll("#wedding .tab-panel").forEach(x=>x.classList.remove("active"));
@@ -1365,7 +1379,9 @@
     };
     function bind(){
       ["meName","partnerName","season"].forEach(id=>{$(id).value=state.profile[id];$(id).oninput=e=>{state.profile[id]=e.target.value;save();};});
-      ["mySavings","partnerSavings","jointSavings","monthlySavings","myAllowance","partnerAllowance"].forEach(id=>{$(id).value=state.money[id];$(id).oninput=e=>{state.money[id]=Number(e.target.value);save();};});
+      ["mySavings","partnerSavings","jointSavings","monthlySavings","myMonthlySavings","partnerMonthlySavings","myAllowance","partnerAllowance","interestSaved"].forEach(id=>{$(id).value=state.money[id]||0;$(id).oninput=e=>{state.money[id]=Number(e.target.value);save();};});
+      $("savingAccount").value = state.money.savingAccount || "";
+      $("savingAccount").oninput = e => { state.money.savingAccount = e.target.value; persist(); };
     }
     function statusText(status){ return status==="done" ? "완료" : status==="doing" ? "정보수집중" : "진행전"; }
     function renderTop(){
@@ -1480,6 +1496,16 @@
         sub.fields[e.target.dataset.subField] = e.target.value;
         persist();
       });
+      document.querySelectorAll("[data-map-search]").forEach(btn=>btn.onclick=e=>{
+        const sub = step.subtasks[Number(e.currentTarget.dataset.subIndex)];
+        const key = e.currentTarget.dataset.subField;
+        const query = (sub.fields?.[key] || "").trim();
+        if(!query){ alert("장소명을 먼저 입력해줘."); return; }
+        const url = e.currentTarget.dataset.mapSearch === "naver"
+          ? `https://map.naver.com/p/search/${encodeURIComponent(query)}`
+          : `https://map.kakao.com/link/search/${encodeURIComponent(query)}`;
+        window.open(url, "_blank");
+      });
       document.querySelectorAll("[data-inline-budget]").forEach(input=>input.oninput=e=>{const row=state.budget.find(x=>x.id===e.target.dataset.inlineBudget);row[e.target.dataset.key]=Number(e.target.value);save();});
       document.querySelector("[data-add-stage-budget]")?.addEventListener("click",()=>{state.budget.push({id:crypto.randomUUID(),stepId:step.id,category:step.category,item:`${step.title} 예산`,detail:"",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"});save();});
       bindCards();
@@ -1522,20 +1548,29 @@
       const common = `data-sub-field="${key}" data-sub-index="${index}" placeholder="${label}"`;
       return `<div class="step-field ${wide?"wide":""}"><label>${label}</label>${type==="textarea" ? `<textarea ${common}>${value}</textarea>` : `<input type="${type}" value="${value}" ${common}>`}</div>`;
     }
+    function placeFieldHtml(item,index,key="place",label="장소/위치"){
+      item.fields ||= {};
+      const value = item.fields[key] || "";
+      return `<div class="step-field wide"><label>${label}</label><input value="${value}" data-sub-field="${key}" data-sub-index="${index}" placeholder="장소명을 입력하고 지도 검색"><div class="map-actions"><button type="button" data-map-search="naver" data-sub-index="${index}" data-sub-field="${key}">네이버지도</button><button type="button" data-map-search="kakao" data-sub-index="${index}" data-sub-field="${key}">카카오맵</button></div></div>`;
+    }
     function renderSubtaskFields(step,item,index){
-      const title = `${step.title} ${item.title}`;
+      const stepTitle = step.title || "";
+      const itemTitle = item.title || "";
+      const title = `${stepTitle} ${itemTitle}`;
       const fields = [];
       if (/예산|견적|식대|계약금|잔금|비용|금액/.test(title)) {
         fields.push(fieldHtml(item,index,"amount","금액","number"));
         fields.push(fieldHtml(item,index,"payment","결제/분담"));
       }
-      if (/장소|위치|웨딩홀|숙소|스튜디오|샵|매물|지역/.test(title)) {
-        fields.push(fieldHtml(item,index,"place","장소/위치"));
+      const needsPlace = /장소|위치|웨딩홀 후보|웨딩홀 투어|숙소|스튜디오 후보|메이크업 후보|드레스 후보|플래너 후보|헤어변형 후보|부케|한복|예복|매물 후보|지역\/조건/.test(itemTitle) || /첫인사|웨딩홀 후보와 투어|웨딩홀 계약|신혼여행|신혼집 계약|혼주관련/.test(stepTitle) && /장소|후보|숙소|지역|매물|한복|예복|메이크업/.test(itemTitle);
+      if (needsPlace) {
+        fields.push(placeFieldHtml(item,index,"place","장소/위치"));
         fields.push(fieldHtml(item,index,"link","링크/주소"));
       }
       if (/후보|투어|업체|플래너|스튜디오|드레스|메이크업|헤어변형|부케|여행사|가전|가구|한복|예복/.test(title)) {
         fields.push(fieldHtml(item,index,"candidate","후보명"));
         fields.push(fieldHtml(item,index,"quote","견적/조건"));
+        fields.push(fieldHtml(item,index,"image","이미지/자료 링크","text",true));
       }
       if (/웨딩홀 후보|식대|보증인원|주차|제공|무료|동선/.test(title)) {
         fields.push(fieldHtml(item,index,"meal","식대/보증인원"));
@@ -1575,17 +1610,17 @@
     }
     function renderMoney(){
       $("moneyTotal").textContent = won(totalMoney());
-      $("moneyMonthly").textContent = won(state.money.monthlySavings);
+      $("moneyMonthly").textContent = won(Number(state.money.monthlySavings||0)+Number(state.money.myMonthlySavings||0)+Number(state.money.partnerMonthlySavings||0));
       $("allowanceTotal").textContent = won(Number(state.money.myAllowance||0)+Number(state.money.partnerAllowance||0));
       $("moneyFree").textContent = freeMoney()>=0 ? won(freeMoney()) : "-"+won(Math.abs(freeMoney()));
       const max = Math.max(totalMoney(),1);
-      $("savingBars").innerHTML = [["수진이 모은 돈",state.money.mySavings],["재준이 모은 돈",state.money.partnerSavings],["공동통장",state.money.jointSavings],["매월 저축 가능액",state.money.monthlySavings]].map(([label,value])=>`<div class="bar-row"><div><span>${label}</span><b>${won(value)}</b></div><div class="bar"><i style="--w:${pct(value,max)}%"></i></div></div>`).join("");
+      $("savingBars").innerHTML = [["신부 현재 모은 돈",state.money.mySavings],["신랑 현재 모은 돈",state.money.partnerSavings],["공동통장",state.money.jointSavings],["현재까지 이자",state.money.interestSaved],["함께 매월 가능액",state.money.monthlySavings],["신부 매월 가능액",state.money.myMonthlySavings],["신랑 매월 가능액",state.money.partnerMonthlySavings]].map(([label,value])=>`<div class="bar-row"><div><span>${label}</span><b>${won(value)}</b></div><div class="bar"><i style="--w:${pct(value,max)}%"></i></div></div>`).join("");
       const monthly = {};
       state.ledger.forEach(x=>{ monthly[x.month] = (monthly[x.month] || 0) + (x.type==="지출"?-Number(x.amount||0):Number(x.amount||0)); });
       const monthlyMax = Math.max(...Object.values(monthly).map(v=>Math.abs(v)),1);
       $("monthlyBars").innerHTML = Object.entries(monthly).sort().map(([label,value])=>`<div class="bar-row"><div><span>${label}</span><b>${value>=0?won(value):"-"+won(Math.abs(value))}</b></div><div class="bar"><i style="--w:${pct(Math.abs(value),monthlyMax)}%"></i></div></div>`).join("") || `<p style="color:var(--sub);font-weight:700">아직 월별 내역이 없어요.</p>`;
-      $("ledgerTable").innerHTML = state.ledger.map(x=>`<tr><td><input type="month" value="${x.month||""}" data-ledger="${x.id}" data-key="month"></td><td><input value="${x.name}" data-ledger="${x.id}" data-key="name"></td><td><input type="number" value="${x.amount}" data-ledger="${x.id}" data-key="amount"></td><td><select data-ledger="${x.id}" data-key="type"><option ${x.type==="저축"?"selected":""}>저축</option><option ${x.type==="지출"?"selected":""}>지출</option><option ${x.type==="수입"?"selected":""}>수입</option></select></td><td><select data-ledger="${x.id}" data-key="who"><option ${x.who==="함께"?"selected":""}>함께</option><option ${x.who==="수진"?"selected":""}>수진</option><option ${x.who==="재준"?"selected":""}>재준</option><option ${x.who==="공동"?"selected":""}>공동</option></select></td><td><button class="delete-mini" data-delete-ledger="${x.id}">×</button></td></tr>`).join("");
-      document.querySelectorAll("[data-ledger]").forEach(input=>input.oninput=e=>{const row=state.ledger.find(x=>x.id===e.target.dataset.ledger);row[e.target.dataset.key]=e.target.dataset.key==="amount"?Number(e.target.value):e.target.value;save();});
+      $("ledgerTable").innerHTML = state.ledger.map(x=>`<tr><td><input type="month" value="${x.month||""}" data-ledger="${x.id}" data-key="month"></td><td><input value="${x.name}" data-ledger="${x.id}" data-key="name"></td><td><input type="number" value="${x.amount}" data-ledger="${x.id}" data-key="amount"></td><td><select data-ledger="${x.id}" data-key="type"><option ${x.type==="저축"?"selected":""}>저축</option><option ${x.type==="이번달저축"?"selected":""}>이번달저축</option><option ${x.type==="지출"?"selected":""}>지출</option><option ${x.type==="수입"?"selected":""}>수입</option><option ${x.type==="이자"?"selected":""}>이자</option></select></td><td><select data-ledger="${x.id}" data-key="who"><option ${x.who==="함께"?"selected":""}>함께</option><option ${x.who==="수진"?"selected":""}>수진</option><option ${x.who==="재준"?"selected":""}>재준</option><option ${x.who==="공동"?"selected":""}>공동</option></select></td><td><input value="${x.account||""}" data-ledger="${x.id}" data-key="account" placeholder="카드/계좌"></td><td><input type="number" value="${x.interest||0}" data-ledger="${x.id}" data-key="interest"></td><td><button class="delete-mini" data-delete-ledger="${x.id}">×</button></td></tr>`).join("");
+      document.querySelectorAll("[data-ledger]").forEach(input=>input.oninput=e=>{const row=state.ledger.find(x=>x.id===e.target.dataset.ledger);const key=e.target.dataset.key;row[key]=["amount","interest"].includes(key)?Number(e.target.value):e.target.value;save();});
       document.querySelectorAll("[data-delete-ledger]").forEach(btn=>btn.onclick=()=>{state.ledger=state.ledger.filter(x=>x.id!==btn.dataset.deleteLedger);save();});
     }
     function bindCards(){ document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>openDetail(btn.dataset.open)); }
@@ -1733,7 +1768,7 @@
     $("addBudget").onclick = () => { state.budget.push({id:crypto.randomUUID(),category:"기타",item:"새 예산 항목",detail:"",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"}); save(); };
     $("addGuest").onclick = () => { state.guest.list.push({id:crypto.randomUUID(),side:"함께",relation:"",name:"새 하객 그룹",count:0,expected:"예정",invite:"미전달",actual:"미정"}); save(); };
     $("addHouse").onclick = () => { state.houses.push({id:crypto.randomUUID(),kind:"house",category:"집 후보",name:"새 집 후보",quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",monthly:0,selected:false,memo:"",photo:""}); save(); };
-    $("addLedger").onclick = () => { state.ledger.push({id:crypto.randomUUID(),month:new Date().toISOString().slice(0,7),name:"새 내역",amount:0,type:"저축",who:"함께"}); save(); };
+    $("addLedger").onclick = () => { state.ledger.push({id:crypto.randomUUID(),month:new Date().toISOString().slice(0,7),name:"이번달 저축",amount:0,type:"이번달저축",who:"함께",account:state.money.savingAccount||"",interest:0}); save(); };
     $("saveBtn").onclick = () => saveRemote(true);
     $("resetBtn").onclick = () => { if(confirm("샘플값으로 되돌릴까요?")){ state = structuredClone(defaults); save(); } };
     function render(){ bind(); renderTop(); renderWedding(); renderHouse(); renderMoney(); bindCards(); }
