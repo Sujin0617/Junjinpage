@@ -513,7 +513,7 @@
     }
     .stage-card{
       display:grid;
-      grid-template-columns:38px minmax(0,1fr) 54px;
+      grid-template-columns:38px minmax(0,1fr) auto;
       gap:10px;
       align-items:center;
       min-height:62px;
@@ -537,20 +537,33 @@
     .stage-card h3{font-size:14px;line-height:1.25}
     .stage-card p{margin-top:3px;color:var(--sub);font-size:11px;font-weight:800}
     .stage-card .status{height:24px;padding:0 8px;font-size:11px}
+    .stage-actions{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap}
+    .stage-actions button{
+      height:24px;
+      min-width:28px;
+      padding:0 7px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--clover-deep);
+      font-size:11px;
+      font-weight:950;
+    }
+    .stage-actions button.primary-mini{background:var(--clover-deep);border-color:var(--clover-deep);color:#fff}
     .stage-work{min-height:620px}
     .stage-work-head{
       position:relative;
       overflow:hidden;
       margin-bottom:12px;
-      padding:20px;
-      border-radius:24px;
+      padding:16px 18px;
+      border-radius:22px;
       background:linear-gradient(145deg,#fbfff9,#fff);
       border:1px solid var(--line);
       box-shadow:var(--soft-shadow);
     }
-    .stage-work-head h3{margin-top:8px;font-size:28px;letter-spacing:0}
-    .stage-work-head p{margin-top:8px;max-width:760px;color:var(--sub);line-height:1.55;font-weight:720}
-    .stage-work-head .mini-actions{margin-top:14px}
+    .stage-work-head h3{margin-top:7px;font-size:24px;letter-spacing:0}
+    .stage-work-head p{margin-top:6px;max-width:760px;color:var(--sub);line-height:1.45;font-weight:720;font-size:13px}
+    .stage-work-head .mini-actions{display:none}
     .subtabs{
       display:none;
       gap:8px;
@@ -947,11 +960,6 @@
                 <span class="badge" id="activeStageMeta"><span class="dot"></span>01</span>
                 <h3 id="activeStageTitle">결혼준비과정</h3>
                 <p id="activeStageMemo">왼쪽에서 단계를 선택하면 여기에서 세부작업을 채워요.</p>
-                <div class="mini-actions">
-                  <button class="primary" id="markStageDone">완료</button>
-                  <button class="light-btn" id="editStageOpen">편집</button>
-                  <button class="light-btn" id="addWedding">+ 후보</button>
-                </div>
               </div>
               <div class="subtabs" id="subtaskTabs"></div>
               <div id="subtaskWork"></div>
@@ -1406,14 +1414,20 @@
         <button class="stage-card ${x.id===activeStageId?"active":""}" data-stage="${x.id}">
           <strong>${x.order}</strong>
           <div><h3>${x.title}</h3><p>${x.period || "상시"} · ${x.category}</p></div>
-          <span class="status ${x.status}">${statusText(x.status)}</span>
+          <div class="stage-actions">
+            <button class="${x.status==="done"?"":"primary-mini"}" data-stage-done="${x.id}">${x.status==="done"?"취소":"완료"}</button>
+            <button data-stage-edit="${x.id}">편집</button>
+            ${x.needsCandidate ? `<button data-stage-candidate="${x.id}">+</button>` : ""}
+          </div>
         </button>`;
       }).join("");
       document.querySelectorAll("[data-stage]").forEach(btn=>btn.onclick=()=>{ activeStageId = btn.dataset.stage; activeSubtaskIndex = 0; renderChecklist(); });
+      document.querySelectorAll("[data-stage-done]").forEach(btn=>btn.onclick=e=>{e.stopPropagation();toggleStageDone(btn.dataset.stageDone);});
+      document.querySelectorAll("[data-stage-edit]").forEach(btn=>btn.onclick=e=>{e.stopPropagation();openStep(btn.dataset.stageEdit);});
+      document.querySelectorAll("[data-stage-candidate]").forEach(btn=>btn.onclick=e=>{e.stopPropagation();addCandidateForStage(btn.dataset.stageCandidate);});
       $("activeStageMeta").innerHTML = `<span class="dot"></span>${step.order} · ${step.period || "상시"} · ${step.category}`;
       $("activeStageTitle").textContent = step.title;
       $("activeStageMemo").textContent = step.memo || "이 단계에서 확인할 내용을 적어두세요.";
-      $("markStageDone").textContent = step.status === "done" ? "취소" : "완료";
       const subtasks = step.subtasks?.length ? step.subtasks : [{title:"기본 작업",status:step.status}];
       $("subtaskTabs").innerHTML = "";
       const budgetRows = relatedBudgets(step);
@@ -1749,22 +1763,21 @@
       renderStepCandidates(step);
       openDetail(`${item.kind}:${item.id}`);
     };
-    $("markStageDone").onclick = () => {
-      const step = state.prep.find(x=>x.id===activeStageId);
+    function toggleStageDone(id){
+      const step = state.prep.find(x=>x.id===id);
       if(!step) return;
       step.status = step.status === "done" ? "todo" : "done";
       step.subtasks?.forEach(item => item.status = step.status);
       save();
-    };
-    $("editStageOpen").onclick = () => activeStageId && openStep(activeStageId);
-    $("addWedding").onclick = () => {
-      const step = state.prep.find(x=>x.id===activeStageId);
+    }
+    function addCandidateForStage(id){
+      const step = state.prep.find(x=>x.id===id);
       const isHouse = step?.category === "신혼집";
       const item = {id:crypto.randomUUID(),kind:isHouse?"house":"wedding",category:step?.category||"새 분류",name:`${step?.category||"새"} 후보`,quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",monthly:0,selected:false,memo:step ? `${step.title} 단계에서 추가한 후보` : "",photo:""};
       if(isHouse) state.houses.push(item); else state.wedding.push(item);
       save();
       openDetail(`${item.kind}:${item.id}`);
-    };
+    }
     $("addBudget").onclick = () => { state.budget.push({id:crypto.randomUUID(),category:"기타",item:"새 예산 항목",detail:"",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"}); save(); };
     $("addGuest").onclick = () => { state.guest.list.push({id:crypto.randomUUID(),side:"함께",relation:"",name:"새 하객 그룹",count:0,expected:"예정",invite:"미전달",actual:"미정"}); save(); };
     $("addHouse").onclick = () => { state.houses.push({id:crypto.randomUUID(),kind:"house",category:"집 후보",name:"새 집 후보",quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",monthly:0,selected:false,memo:"",photo:""}); save(); };
