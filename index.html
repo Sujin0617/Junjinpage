@@ -165,6 +165,20 @@
     }
     .login-form h2{font-size:26px}
     .login-form p{color:var(--sub);line-height:1.6;font-weight:650}
+    .remember{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      color:var(--sub);
+      font-size:13px;
+      font-weight:850;
+    }
+    .remember input{
+      width:18px;
+      height:18px;
+      padding:0;
+      accent-color:var(--clover-deep);
+    }
     .primary,.light-btn,.icon-btn{
       height:44px;
       border-radius:16px;
@@ -176,6 +190,16 @@
       color:#fff;
       box-shadow:0 12px 26px rgba(47,125,73,.16);
     }
+    .danger{
+      height:44px;
+      border-radius:16px;
+      padding:0 17px;
+      background:#fff1f1;
+      color:#c73636;
+      border:1px solid #ffd0d0;
+      font-weight:950;
+    }
+    .mini-actions{display:flex;gap:8px;flex-wrap:wrap}
     .light-btn,.icon-btn{
       background:#fff;
       border:1px solid var(--line);
@@ -250,7 +274,7 @@
     .actions{display:flex;gap:9px;align-items:center}
     .screen{display:none}
     .screen.active{display:block}
-    .home-grid{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:20px;align-items:start}
+    .home-grid{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
     .hero{
       position:relative;
       overflow:hidden;
@@ -353,9 +377,81 @@
     .module h2{font-size:23px;letter-spacing:0}
     .module p{margin-top:8px;color:var(--sub);line-height:1.55;font-weight:680}
     .module b{font-size:26px}
+    .home-flow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}
+    .flow-card{
+      min-height:300px;
+      padding:26px;
+      border-radius:30px;
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--soft-shadow);
+      text-align:left;
+    }
+    .flow-card h2{margin-top:18px;font-size:28px;letter-spacing:0}
+    .flow-card p{margin-top:8px;color:var(--sub);line-height:1.6;font-weight:700}
+    .flow-list{display:grid;gap:10px;margin-top:20px}
+    .flow-item{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      min-height:48px;
+      padding:10px 12px;
+      border-radius:17px;
+      background:#fbfdfb;
+      border:1px solid var(--line);
+      color:var(--text);
+      font-weight:900;
+    }
+    .flow-item span{
+      width:30px;
+      height:30px;
+      flex:0 0 auto;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      background:var(--clover-soft);
+      color:var(--clover-deep);
+      font-size:12px;
+      font-weight:950;
+    }
     .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px}
     .section-head h2{font-size:32px;letter-spacing:0}
     .section-head p{max-width:760px;margin-top:8px;color:var(--sub);line-height:1.6;font-weight:680}
+    .tabs{display:flex;gap:8px;margin:0 0 18px}
+    .tabs button{
+      height:44px;
+      padding:0 18px;
+      border-radius:16px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--sub);
+      font-weight:950;
+      box-shadow:var(--soft-shadow);
+    }
+    .tabs button.active{background:var(--clover-deep);border-color:var(--clover-deep);color:#fff}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .timeline{
+      display:flex;
+      gap:10px;
+      overflow-x:auto;
+      padding:5px 2px 16px;
+      margin-bottom:12px;
+    }
+    .time-node{
+      min-width:156px;
+      padding:14px;
+      border-radius:20px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:var(--soft-shadow);
+      text-align:left;
+      font-weight:950;
+    }
+    .time-node span{display:block;color:var(--clover-deep);font-size:13px;margin-bottom:7px}
+    .time-node.done{background:var(--clover-deep);color:#fff}
+    .time-node.done span{color:#dcf9dd}
+    .budget-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
     .overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
     .stat{min-height:126px;border-radius:24px;padding:18px}
     .stat strong{display:block;margin-top:9px;font-size:28px;letter-spacing:0}
@@ -367,6 +463,8 @@
     .table td{padding:14px 12px;background:#fbfbfa;border-top:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:middle}
     .table td:first-child{border-left:1px solid var(--line);border-radius:16px 0 0 16px}
     .table td:last-child{border-right:1px solid var(--line);border-radius:0 16px 16px 0}
+    .table tr[data-step]{cursor:pointer}
+    .table tr[data-step]:hover td{background:var(--clover-soft)}
     .status,.tag{
       display:inline-flex;
       align-items:center;
@@ -431,6 +529,7 @@
     .saving-layout{display:grid;grid-template-columns:410px minmax(0,1fr);gap:18px;align-items:start}
     .saving-form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .ledger-table td input,.ledger-table td select{min-height:38px;padding:0 9px;border-radius:12px}
+    .budget-table td input,.budget-table td select{min-height:38px;padding:0 9px;border-radius:12px}
     .modal{position:fixed;inset:0;z-index:60;display:none;place-items:center;padding:22px;background:rgba(0,0,0,.38)}
     .modal.open{display:grid}
     .modal-card{
@@ -460,6 +559,27 @@
     .photo img{width:100%;height:100%;object-fit:cover}
     .detail-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
     .wide{grid-column:1/-1}
+    .subtask-list{display:grid;gap:9px}
+    .subtask-row{
+      display:grid;
+      grid-template-columns:34px minmax(0,1fr) 120px 42px;
+      gap:8px;
+      align-items:center;
+      padding:9px;
+      border-radius:16px;
+      background:#fff;
+      border:1px solid var(--line);
+    }
+    .subtask-row input,.subtask-row select{height:38px;padding:0 9px;border-radius:12px}
+    .delete-mini{
+      width:38px;
+      height:38px;
+      border-radius:13px;
+      background:#fff1f1;
+      color:#c73636;
+      font-weight:950;
+      border:1px solid #ffd0d0;
+    }
     .check{display:flex;align-items:center;gap:9px;min-height:44px;padding:0 12px;border-radius:14px;background:#fff;border:1px solid var(--line);font-weight:950}
     .check input{width:20px;height:20px;accent-color:var(--clover-deep)}
     .bottom-tabs{
@@ -484,7 +604,7 @@
       .sidebar{display:none}
       .main{padding:18px 14px 92px}
       .home-grid,.two-col,.saving-layout,.detail{grid-template-columns:1fr}
-      .module-grid,.overview,.graph-grid,.program-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .module-grid,.overview,.graph-grid,.program-grid,.home-flow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
       .bottom-tabs{display:grid}
     }
     @media(max-width:760px){
@@ -493,7 +613,7 @@
       .hero{padding:24px;border-radius:28px;min-height:auto}
       .hero h1{font-size:37px}
       .hero .clover{display:none}
-      .profile-row,.module-grid,.overview,.graph-grid,.program-grid,.saving-form,.detail-fields{grid-template-columns:1fr}
+      .profile-row,.module-grid,.home-flow-grid,.overview,.graph-grid,.program-grid,.saving-form,.detail-fields,.subtask-row{grid-template-columns:1fr}
       .section-head{align-items:flex-start;flex-direction:column}
       .section-head h2{font-size:28px}
       .candidate{grid-template-columns:1fr}
@@ -522,6 +642,7 @@
         <p>수진과 재준만의 결혼 준비 홈에 들어가기.</p>
         <div class="field"><label>아이디</label><input id="loginId" placeholder="jin0617 또는 jun1107"></div>
         <div class="field"><label>비밀번호</label><input id="loginPw" type="password" placeholder="비밀번호"></div>
+        <label class="remember"><input type="checkbox" id="rememberId"> 아이디 저장</label>
         <button class="primary" id="loginBtn">JJ 홈으로</button>
       </div>
     </div>
@@ -554,8 +675,8 @@
         <div class="home-grid">
           <article class="hero">
             <span class="badge"><i class="dot"></i><span id="seasonBadge">2026년 11-12월 목표</span></span>
-            <h1>JJ의 행복한 결혼생활을 한눈에.</h1>
-            <p>결혼식 준비, 집 준비, 돈 모으기를 실제 앱처럼 나눠 보고 선택한 후보가 우리 가용자금에 어떤 영향을 주는지 바로 확인합니다.</p>
+            <h1>우리의 준비 순서를 먼저 볼게요.</h1>
+            <p>첫 화면은 돈보다 흐름을 먼저 보여줘요. 결혼식은 어떤 순서로 준비할지, 집은 어떤 단계로 알아볼지 가볍게 확인하고 들어갑니다.</p>
             <div class="profile-row">
               <div class="field"><label>수진 이름</label><input id="meName"></div>
               <div class="field"><label>재준 이름</label><input id="partnerName"></div>
@@ -563,43 +684,61 @@
             </div>
             <div class="clover"><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="stem"></i></div>
           </article>
-          <aside class="phone-panel">
-            <div class="phone-head"><span>JJ Money</span><button class="icon-btn" data-screen="money">›</button></div>
-            <div class="notice">현재 선택 기준으로 남는 돈을 계산했어요.</div>
-            <div class="phone-card">
-              <span>현재 모은 돈</span>
-              <strong id="phoneTotal">0원</strong>
-              <svg class="sparkline" viewBox="0 0 320 90" preserveAspectRatio="none">
-                <path d="M0,64 C60,64 64,64 104,64 C138,64 145,32 176,36 C214,40 220,18 250,22 C280,25 294,22 320,20" fill="none" stroke="#2f7d49" stroke-width="5" stroke-linecap="round"/>
-                <path d="M176,36 C214,40 220,18 250,22 L320,20 L320,88 L176,88 Z" fill="rgba(126,219,139,.18)"/>
-              </svg>
-              <div class="phone-buttons"><button>상세</button><button>변동이력</button><button>예산등급</button></div>
-            </div>
-            <div class="phone-card"><span>선택 후 여유자금</span><strong id="phoneFree">0원</strong></div>
-          </aside>
         </div>
-        <div class="module-grid">
-          <button class="module" data-screen="wedding"><div class="module-top"><span class="module-icon">01</span><span class="tag green" id="prepDone">0개 완료</span></div><div><h2>결혼식 준비</h2><p>엑셀 기반 순서를 추천 흐름으로 보고 후보를 쌓아요.</p></div><b id="homeWeddingMoney">0원</b></button>
-          <button class="module" data-screen="house"><div class="module-top"><span class="module-icon">02</span><span class="tag soft">LH/SH 포함</span></div><div><h2>집 준비</h2><p>공고 확인, 매물 후보, 월 비용을 연결해서 봅니다.</p></div><b id="homeHouseMonthly">월 0원</b></button>
-          <button class="module" data-screen="money"><div class="module-top"><span class="module-icon">03</span><span class="tag soft">저축</span></div><div><h2>돈 모으기</h2><p>각자 돈, 공동통장, 용돈, 한 달 저축 가능액을 관리해요.</p></div><b id="homeMonthlySave">0원</b></button>
+        <div class="home-flow-grid">
+          <button class="flow-card" data-screen="wedding">
+            <span class="module-icon">01</span>
+            <h2>결혼식 준비 과정</h2>
+            <p>엑셀에 있던 체크리스트를 추천 순서로 보고, 후보는 안쪽에서 차곡차곡 비교해요.</p>
+            <div class="flow-list">
+              <div class="flow-item"><span>1</span>결혼 방향과 기준 정하기</div>
+              <div class="flow-item"><span>2</span>웨딩홀 후보 모으기</div>
+              <div class="flow-item"><span>3</span>스드메, 본식 촬영 비교하기</div>
+              <div class="flow-item"><span>4</span>최종 선택과 계약 정리하기</div>
+            </div>
+          </button>
+          <button class="flow-card" data-screen="house">
+            <span class="module-icon">02</span>
+            <h2>집 준비 과정</h2>
+            <p>LH/SH 공고 확인부터 매물 후보 정리까지, 지금은 알아보고 신청하는 흐름에 집중해요.</p>
+            <div class="flow-list">
+              <div class="flow-item"><span>1</span>LH/SH 공고 확인하기</div>
+              <div class="flow-item"><span>2</span>지원 자격과 서류 체크하기</div>
+              <div class="flow-item"><span>3</span>매매/전세 후보 모으기</div>
+              <div class="flow-item"><span>4</span>방문 메모와 선택 기준 정리하기</div>
+            </div>
+          </button>
         </div>
       </section>
 
       <section class="screen" id="wedding">
-        <div class="section-head"><div><h2>결혼식 준비</h2><p>추천 순서대로 진행하고, 후보 카드를 눌러 사진과 상세 견적을 기록합니다. 최종 선택한 후보만 예산에 반영돼요.</p></div><button class="primary" id="addWedding">후보 추가</button></div>
-        <div class="overview">
-          <div class="stat"><span>진행률</span><strong id="weddingProgressText">0%</strong><small>추천 항목 기준</small></div>
-          <div class="stat"><span>최종 선택 예산</span><strong id="weddingFinalMoney">0원</strong><small>실제금액 우선 반영</small></div>
-          <div class="stat"><span>계약금</span><strong id="weddingDeposit">0원</strong><small>선택 후보 합계</small></div>
-          <div class="stat"><span>잔금</span><strong id="weddingBalance">0원</strong><small>입금일은 상세에서 관리</small></div>
+        <div class="section-head"><div><h2>결혼식 준비</h2><p>과정은 천천히 따라가고, 예산은 엑셀처럼 한 표에서 직접 씁니다.</p></div><button class="primary" id="addWedding">후보 추가</button></div>
+        <div class="tabs">
+          <button class="active" data-wtab="process">과정</button>
+          <button data-wtab="budget">예산</button>
         </div>
-        <div class="graph-grid">
-          <div class="graph-card"><h3>결혼식 준비 퍼센트</h3><div class="donut-wrap"><div class="donut" id="weddingDonut">0%</div><p style="color:var(--sub);line-height:1.7;font-weight:700">정확한 날짜표가 아니라 우리 속도에 맞춰 완료만 체크합니다.</p></div></div>
-          <div class="graph-card"><h3>예산 사용 그래프</h3><div class="bar-list" id="weddingBars"></div></div>
+        <div class="tab-panel active" id="wtab-process">
+          <div class="timeline" id="prepTimeline"></div>
+          <div class="graph-grid">
+            <div class="graph-card"><h3>결혼식 준비 퍼센트</h3><div class="donut-wrap"><div class="donut" id="weddingDonut">0%</div><p style="color:var(--sub);line-height:1.7;font-weight:700">정확한 날짜표가 아니라 우리 속도에 맞춰 완료만 체크합니다.</p></div></div>
+            <div class="graph-card"><h3>진행 요약</h3><div class="overview" style="grid-template-columns:repeat(2,1fr);margin:0"><div class="stat"><span>진행률</span><strong id="weddingProgressText">0%</strong></div><div class="stat"><span>전체 단계</span><strong id="weddingStepCount">0개</strong></div></div></div>
+          </div>
+          <div class="two-col">
+            <div class="panel"><table class="table"><thead><tr><th>순서</th><th>큰 과정</th><th>세부 확인</th><th>상태</th></tr></thead><tbody id="prepTable"></tbody></table></div>
+            <div class="panel"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h2 style="font-size:22px">후보 스택</h2><span class="tag soft">단계별로 연결</span></div><div class="candidate-list" id="weddingCards"></div></div>
+          </div>
         </div>
-        <div class="two-col">
-          <div class="panel"><table class="table"><thead><tr><th>순서</th><th>추천 항목</th><th>확인할 것</th><th>상태</th></tr></thead><tbody id="prepTable"></tbody></table></div>
-          <div class="panel"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h2 style="font-size:22px">후보 스택</h2><span class="tag soft">위에서부터 차곡차곡</span></div><div class="candidate-list" id="weddingCards"></div></div>
+        <div class="tab-panel" id="wtab-budget">
+          <div class="budget-summary">
+            <div class="stat"><span>예상 비용 합계</span><strong id="budgetQuoteTotal">0원</strong></div>
+            <div class="stat"><span>실제 비용 합계</span><strong id="budgetActualTotal">0원</strong></div>
+            <div class="stat"><span>계약금 합계</span><strong id="budgetDepositTotal">0원</strong></div>
+            <div class="stat"><span>잔금 합계</span><strong id="budgetBalanceTotal">0원</strong></div>
+          </div>
+          <div class="panel">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h2 style="font-size:22px">결혼 예산표</h2><button class="light-btn" id="addBudget">예산 항목 추가</button></div>
+            <table class="table budget-table"><thead><tr><th>항목</th><th>상세내용</th><th>예상비용</th><th>계약금</th><th>잔금</th><th>실제비용</th><th>결제</th><th>담당</th><th>진행</th><th>삭제</th></tr></thead><tbody id="budgetTable"></tbody></table>
+          </div>
         </div>
       </section>
 
@@ -634,7 +773,8 @@
             <div class="field"><label>재준 용돈/고정지출</label><input type="number" id="partnerAllowance"></div>
           </div></div>
         </div>
-        <div class="panel" style="margin-top:18px"><table class="table ledger-table"><thead><tr><th>내역</th><th>금액</th><th>구분</th><th>담당</th></tr></thead><tbody id="ledgerTable"></tbody></table></div>
+        <div class="panel" style="margin-top:18px"><h2 style="font-size:22px;margin-bottom:14px">월별 돈 흐름</h2><div class="bar-list" id="monthlyBars"></div></div>
+        <div class="panel" style="margin-top:18px"><table class="table ledger-table"><thead><tr><th>월</th><th>내역</th><th>금액</th><th>구분</th><th>담당</th><th>삭제</th></tr></thead><tbody id="ledgerTable"></tbody></table></div>
       </section>
     </main>
   </div>
@@ -658,14 +798,42 @@
           <div class="field" id="monthlyField"><label>월 비용</label><input type="number" id="dMonthly"></div>
           <label class="check wide"><input type="checkbox" id="dSelected"> 최종 선택으로 예산에 반영</label>
           <div class="field wide"><label>상세 메모</label><textarea id="dMemo"></textarea></div>
-          <button class="primary wide" id="saveDetail">상세 저장</button>
+          <div class="mini-actions wide"><button class="primary" id="saveDetail">상세 저장</button><button class="danger" id="deleteDetail">후보 삭제</button></div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="stepModal">
+    <div class="modal-card">
+      <div class="modal-head"><h2 id="stepTitle">단계 상세</h2><button class="close" id="closeStepModal">×</button></div>
+      <div class="detail-fields">
+        <div class="field"><label>순서</label><input id="sOrder"></div>
+        <div class="field"><label>분류</label><input id="sCategory"></div>
+        <div class="field wide"><label>단계명</label><input id="sTitle"></div>
+        <div class="field wide"><label>확인할 것</label><textarea id="sMemo"></textarea></div>
+        <div class="field"><label>상태</label><select id="sStatus"><option value="todo">예정</option><option value="doing">진행중</option><option value="done">완료</option></select></div>
+        <label class="check"><input type="checkbox" id="sNeedsCandidate"> 후보/견적 비교가 필요한 단계</label>
+        <div class="wide">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <h3>세부단계</h3><button class="light-btn" id="addSubtask">세부단계 추가</button>
+          </div>
+          <div class="subtask-list" id="subtaskList"></div>
+        </div>
+        <div class="wide">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <h3>이 단계 관련 후보</h3><button class="light-btn" id="addStepCandidate">후보 만들기</button>
+          </div>
+          <div class="candidate-list" id="stepCandidates"></div>
+        </div>
+        <div class="mini-actions wide"><button class="primary" id="saveStep">단계 저장</button><button class="danger" id="deleteStep">단계 삭제</button></div>
       </div>
     </div>
   </div>
 
   <script>
     const KEY = "jj-clover-wedding-v1";
+    const LOGIN_ID_KEY = KEY + "-login-id";
     const SUPABASE_URL = "https://epqnkwpmsyfeczgribxa.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwcW5rd3Btc3lmZWN6Z3JpYnhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyNTA2NjUsImV4cCI6MjA5NTgyNjY2NX0.dvpSuUAJM3_tk9Mgsk_NxSaWvJ_YhYMKqBC1KNUtDrw";
     const fmt = new Intl.NumberFormat("ko-KR");
@@ -677,18 +845,59 @@
       profile:{meName:"박수진",partnerName:"이재준",season:"2026년 11-12월"},
       money:{mySavings:18000000,partnerSavings:22000000,jointSavings:8000000,monthlySavings:3000000,myAllowance:800000,partnerAllowance:800000},
       prep:[
-        {id:"p1",order:"01",title:"결혼 방향 합의",memo:"예산 상한, 하객 규모, 지역, 집 준비 우선순위",status:"doing"},
-        {id:"p2",order:"02",title:"웨딩홀 후보 정리",memo:"식대, 보증인원, 대관료, 주차, 동선, 취소 규정",status:"doing"},
-        {id:"p3",order:"03",title:"웨딩홀 투어와 계약",memo:"최소 2-3곳 비교 후 최종 선택",status:"todo"},
-        {id:"p4",order:"04",title:"스드메 후보 비교",memo:"원본, 헬퍼비, 추가금, 촬영 구성 확인",status:"todo"},
-        {id:"p5",order:"05",title:"본식 촬영/DVD",memo:"포트폴리오 확인 후 견적 비교",status:"todo"},
-        {id:"p6",order:"06",title:"예물/예복/청첩장",memo:"필요한 것부터 순서대로 진행",status:"todo"},
-        {id:"p7",order:"07",title:"본식 디테일",memo:"식순, BGM, 축가, 포토테이블, 리허설",status:"todo"}
+        {id:"p01",order:"01",category:"결혼전",title:"양가 부모님 첫인사",memo:"첫인사 일정 조율, 장소 선택, 과일바구니/꽃다발 등 선물 준비",status:"todo",needsCandidate:false,subtasks:[{title:"첫인사 일정 조율",status:"todo"},{title:"첫인사 선물 준비",status:"todo"}]},
+        {id:"p02",order:"02",category:"웨딩홀",title:"예식 기준 정하기",memo:"예식 위치, 택일/희망 월, 예산, 하객 편의, 주차, 식사 우선순위 정리",status:"doing",needsCandidate:false,subtasks:[{title:"예식 위치 정하기",status:"doing"},{title:"택일 또는 일정 잡기",status:"todo"},{title:"우선순위 정하기",status:"todo"}]},
+        {id:"p03",order:"03",category:"웨딩홀",title:"웨딩홀 후보 정리",memo:"식대, 보증인원, 대관료, 주차, 동선, 취소 규정, 단독홀 여부 비교",status:"doing",needsCandidate:true,subtasks:[{title:"웨딩홀 후보 2-3곳 이상 모으기",status:"doing"},{title:"식대/보증인원/대관료 비교",status:"todo"},{title:"교통/셔틀/주차 체크",status:"todo"}]},
+        {id:"p04",order:"04",category:"웨딩홀",title:"웨딩홀 투어와 계약",memo:"투어 후 당일 계약 혜택, 취소 기간, 현금영수증, 부가세 포함 여부 확인",status:"todo",needsCandidate:true,subtasks:[{title:"투어 일정 잡기",status:"todo"},{title:"투어 체크리스트 작성",status:"todo"},{title:"계약금/잔금 정리",status:"todo"}]},
+        {id:"p05",order:"05",category:"스드메",title:"플래너와 스드메 계약",memo:"동행/비동행 플래너, 스튜디오, 드레스, 메이크업 추구미 비교",status:"todo",needsCandidate:true,subtasks:[{title:"플래너 업체 선정",status:"todo"},{title:"스튜디오 후보 비교",status:"todo"},{title:"드레스/메이크업 후보 비교",status:"todo"}]},
+        {id:"p06",order:"06",category:"예산",title:"비용 분담과 카드 정하기",memo:"신랑/신부 비용 분담 방식, 캐시백/마일리지 카드, 결제 수단 정리",status:"todo",needsCandidate:false,subtasks:[{title:"비용 분담 기준 정하기",status:"todo"},{title:"결제 카드/계좌 정하기",status:"todo"}]},
+        {id:"p07",order:"07",category:"본식",title:"본식 스냅/DVD 예약",memo:"본식 스냅, 본식 DVD, 아이폰 스냅, 사회자, 헤어변형 예약",status:"todo",needsCandidate:true,subtasks:[{title:"본식 스냅 후보 비교",status:"todo"},{title:"DVD 후보 비교",status:"todo"},{title:"아이폰 스냅 후보 비교",status:"todo"},{title:"사회자 섭외",status:"todo"},{title:"헤어변형 예약",status:"todo"}]},
+        {id:"p08",order:"08",category:"예물/예복",title:"웨딩밴드와 예복",memo:"웨딩밴드 구매, 신랑 예복 맞춤/기성/대여, 수령 일정 체크",status:"todo",needsCandidate:true,subtasks:[{title:"웨딩밴드 후보 비교",status:"todo"},{title:"신랑 예복 선택",status:"todo"}]},
+        {id:"p09",order:"09",category:"드레스",title:"드레스 투어와 가봉",memo:"드레스 투어 2-3곳 또는 지정, 최종 피팅과 가봉 일정 관리",status:"todo",needsCandidate:true,subtasks:[{title:"드레스 투어 예약",status:"todo"},{title:"드레스 최종 피팅",status:"todo"}]},
+        {id:"p10",order:"10",category:"신혼여행",title:"신혼여행 예약",memo:"항공권, 숙소, 여행사/직접 예약 비교, 환전과 짐싸기",status:"todo",needsCandidate:true,subtasks:[{title:"항공권 구매",status:"todo"},{title:"숙소/여행사 비교",status:"todo"},{title:"환전",status:"todo"},{title:"짐싸기",status:"todo"}]},
+        {id:"p11",order:"11",category:"촬영",title:"촬영 준비",memo:"촬영 시안, 웨딩 네일, 헤어변형 자료, 부케/플라워, 소품, 촬영 진행",status:"todo",needsCandidate:true,subtasks:[{title:"촬영 시안 만들기",status:"todo"},{title:"웨딩 네일",status:"todo"},{title:"소품 준비",status:"todo"},{title:"촬영 진행",status:"todo"}]},
+        {id:"p12",order:"12",category:"신혼집",title:"신혼집 계약과 가전가구",memo:"지역, 예산, 월세/전세/매매 기준 정리 후 후보 비교와 계약",status:"todo",needsCandidate:true,subtasks:[{title:"신혼집 계약",status:"todo"},{title:"가전 가구 구매",status:"todo"}]},
+        {id:"p13",order:"13",category:"청첩장",title:"하객리스트와 청첩장",memo:"하객리스트 작성, 인쇄 부수, 청첩장 제작/주문, 모바일 청첩장, 청첩장 모임",status:"todo",needsCandidate:true,subtasks:[{title:"하객리스트 작성",status:"todo"},{title:"청첩장 제작 및 주문",status:"todo"},{title:"모바일 청첩장 제작",status:"todo"},{title:"청첩장 모임 시작",status:"todo"}]},
+        {id:"p14",order:"14",category:"혼주",title:"혼주 준비",memo:"혼주 한복, 혼주 예복, 혼주 메이크업, 형제 예복 확인",status:"todo",needsCandidate:true,subtasks:[{title:"혼주 한복 대여",status:"todo"},{title:"혼주 예복",status:"todo"},{title:"혼주 메이크업 예약",status:"todo"},{title:"형제 예복",status:"todo"}]},
+        {id:"p15",order:"15",category:"본식",title:"본식 구성 정리",memo:"식순, 화촉점화, 입장, 축의대, 가방순이, 주례, 축가, 사회자 대본, 식전영상",status:"todo",needsCandidate:true,subtasks:[{title:"식순 정하기",status:"todo"},{title:"축의대/가방순이 섭외",status:"todo"},{title:"축가/축사 섭외",status:"todo"},{title:"사회자 대본 컨펌",status:"todo"},{title:"식전 영상 제작",status:"todo"}]},
+        {id:"p16",order:"16",category:"웨딩홀",title:"시식과 보증인원",memo:"웨딩홀 뷔페 시식, 예상 하객 명단, 보증인원, 식대 계산",status:"todo",needsCandidate:false,subtasks:[{title:"웨딩홀 뷔페 시식",status:"todo"},{title:"예상 하객 명단 정리",status:"todo"},{title:"보증인원 계산",status:"todo"},{title:"식대 계산",status:"todo"}]},
+        {id:"p17",order:"17",category:"부케/관리",title:"부케와 컨디션 관리",memo:"부케 예약, 피부관리, 염색/커트, 네일, 무리한 관리 금지",status:"todo",needsCandidate:true,subtasks:[{title:"부케 예약",status:"todo"},{title:"피부관리",status:"todo"},{title:"염색/커트",status:"todo"},{title:"네일",status:"todo"}]},
+        {id:"p18",order:"18",category:"마지막체크",title:"본식 직전 체크",memo:"리허설, 순서/BGM, 포토테이블 사진, 예복/한복 픽업, 본식 짐싸기, 식순 외우기",status:"todo",needsCandidate:false,subtasks:[{title:"리허설",status:"todo"},{title:"순서 및 BGM 체크",status:"todo"},{title:"포토테이블 사진 체크",status:"todo"},{title:"예복 픽업",status:"todo"},{title:"혼주 한복 픽업",status:"todo"},{title:"본식 짐싸기",status:"todo"},{title:"식순 외우기",status:"todo"}]}
       ],
       wedding:[
         {id:"w1",kind:"wedding",category:"웨딩홀",name:"A 웨딩홀",quote:22000000,actual:22000000,deposit:1000000,balance:21000000,balanceDate:"",payment:"계좌이체",selected:true,memo:"보증인원, 식대, 주차, 단독홀 여부 확인",photo:""},
         {id:"w2",kind:"wedding",category:"웨딩홀",name:"B 웨딩홀",quote:19800000,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",selected:false,memo:"견적서 요청 필요",photo:""},
-        {id:"w3",kind:"wedding",category:"스드메",name:"스드메 후보",quote:4800000,actual:0,deposit:300000,balance:4500000,balanceDate:"",payment:"카드",selected:false,memo:"헬퍼비 별도 여부 체크",photo:""}
+        {id:"w3",kind:"wedding",category:"스드메",name:"스드메 후보",quote:4800000,actual:0,deposit:300000,balance:4500000,balanceDate:"",payment:"카드",selected:false,memo:"헬퍼비 별도 여부 체크",photo:""},
+        {id:"w4",kind:"wedding",category:"본식",name:"본식 스냅 후보",quote:1500000,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",selected:false,memo:"색감, 원본 제공, 추가금 확인",photo:""},
+        {id:"w5",kind:"wedding",category:"청첩장",name:"청첩장 후보",quote:300000,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",selected:false,memo:"인쇄 부수, 모바일 청첩장 포함 여부",photo:""}
+      ],
+      budget:[
+        {id:"b01",category:"결혼전",item:"상견례",detail:"장소, 식사, 양가 일정",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b02",category:"결혼전",item:"상견례 선물",detail:"과일바구니, 꽃다발 등",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b03",category:"결혼전",item:"청첩장 모임",detail:"청모 식사/카페 비용",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b04",category:"웨딩홀",item:"홀 대관료",detail:"대관료, 포함 항목",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b05",category:"웨딩홀",item:"식대",detail:"성인/아동 식대, 보증인원",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b06",category:"웨딩홀",item:"추가 식대",detail:"당일 추가 인원/추가 금액",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b07",category:"본식",item:"부케",detail:"본식 부케, 플라워디렉팅",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b08",category:"청첩장",item:"청첩장",detail:"인쇄 청첩장 제작/주문",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b09",category:"청첩장",item:"모바일 청첩장",detail:"혼주/신랑신부 버전",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b10",category:"본식",item:"식전영상",detail:"포트폴리오 확인, 제작",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b11",category:"본식",item:"사회자",detail:"전문 사회자/지인 사회자",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b12",category:"본식",item:"축의대",detail:"친척/업체, 가방순이",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b13",category:"본식",item:"축가/축사 사례",detail:"친구/업체 사례비",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b14",category:"본식촬영",item:"본식 스냅",detail:"원본, 보정, 추가금",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b15",category:"본식촬영",item:"본식 DVD",detail:"영상 구성, 원본 여부",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b16",category:"본식촬영",item:"아이폰 스냅",detail:"당일 전달, 포트폴리오",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b17",category:"스드메",item:"플래너",detail:"동행/비동행",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b18",category:"스드메",item:"스드메",detail:"스튜디오, 드레스, 메이크업",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b19",category:"스드메",item:"헤어변형",detail:"촬영/본식 헤어변형",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b20",category:"스드메",item:"헬퍼/소품/피팅비",detail:"헬퍼비, 소품, 드레스투어 피팅비",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b21",category:"혼주",item:"어머님 한복",detail:"대여/맞춤",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b22",category:"혼주",item:"아버님 예복",detail:"대여/맞춤",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b23",category:"혼주",item:"혼주 메이크업",detail:"홀 내부/외부 예약",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b24",category:"예복",item:"신랑 예복",detail:"맞춤/기성복/대여",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b25",category:"예물",item:"결혼반지",detail:"명품/청담/종로 후보",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b26",category:"결혼후",item:"답례품",detail:"필요 시 수량/단가",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"}
       ],
       programs:[
         {id:"lh",title:"LH 지원",status:"확인필요",memo:"공고명, 접수일, 자격, 서류를 직접 확인해서 기록"},
@@ -700,15 +909,44 @@
         {id:"h2",kind:"house",category:"LH/SH",name:"LH/SH 공고 후보",quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",monthly:0,selected:false,memo:"공고 링크, 서류, 접수 상태 기록",photo:""}
       ],
       ledger:[
-        {id:"l1",name:"공동통장 입금",amount:3000000,type:"저축",who:"함께"},
-        {id:"l2",name:"웨딩홀 계약금",amount:1000000,type:"지출",who:"공동"},
-        {id:"l3",name:"집 준비금 적립",amount:1500000,type:"저축",who:"함께"}
+        {id:"l1",month:"2026-08",name:"공동통장 입금",amount:3000000,type:"저축",who:"함께"},
+        {id:"l2",month:"2026-08",name:"웨딩홀 계약금",amount:1000000,type:"지출",who:"공동"},
+        {id:"l3",month:"2026-09",name:"집 준비금 적립",amount:1500000,type:"저축",who:"함께"}
       ]
     };
     let state = JSON.parse(localStorage.getItem(KEY)||"null") || structuredClone(defaults);
     let editing = null;
+    let editingStep = null;
     let session = JSON.parse(localStorage.getItem(KEY + "-session") || "null");
     let saveTimer = null;
+    function normalizeState(){
+      state.profile = {...defaults.profile, ...(state.profile || {})};
+      state.money = {...defaults.money, ...(state.money || {})};
+      state.wedding = Array.isArray(state.wedding) ? state.wedding : structuredClone(defaults.wedding);
+      state.budget = Array.isArray(state.budget) && state.budget.length ? state.budget : structuredClone(defaults.budget);
+      state.houses = Array.isArray(state.houses) ? state.houses : structuredClone(defaults.houses);
+      state.programs = Array.isArray(state.programs) ? state.programs : structuredClone(defaults.programs);
+      state.ledger = Array.isArray(state.ledger) ? state.ledger : structuredClone(defaults.ledger);
+      state.ledger.forEach(item => item.month ||= new Date().toISOString().slice(0,7));
+      let currentPrep = Array.isArray(state.prep) ? state.prep : [];
+      if (currentPrep.length < 10 && !currentPrep.some(item => item.id === "p01")) currentPrep = [];
+      const byId = Object.fromEntries(currentPrep.map(item => [item.id, item]));
+      state.prep = defaults.prep.map(item => ({
+        ...structuredClone(item),
+        ...(byId[item.id] || {}),
+        subtasks: Array.isArray(byId[item.id]?.subtasks) ? byId[item.id].subtasks : structuredClone(item.subtasks || [])
+      }));
+      currentPrep.filter(item => !defaults.prep.some(base => base.id === item.id)).forEach(item => state.prep.push(item));
+      state.prep.forEach((item, index) => {
+        item.id ||= crypto.randomUUID();
+        item.order ||= String(index + 1).padStart(2,"0");
+        item.category ||= "기타";
+        item.status ||= "todo";
+        item.subtasks ||= [];
+        item.needsCandidate = !!item.needsCandidate;
+      });
+    }
+    normalizeState();
     const save = () => {
       localStorage.setItem(KEY, JSON.stringify(state));
       render();
@@ -745,6 +983,7 @@
       });
       if (rows?.[0]?.data && Object.keys(rows[0].data).length) {
         state = rows[0].data;
+        normalizeState();
         localStorage.setItem(KEY, JSON.stringify(state));
       } else {
         await saveRemote(false);
@@ -787,8 +1026,14 @@
       window.scrollTo({top:0,behavior:"smooth"});
     }
     document.querySelectorAll("[data-screen]").forEach(x=>x.onclick=()=>nav(x.dataset.screen));
+    document.querySelectorAll("[data-wtab]").forEach(btn=>btn.onclick=()=>{
+      document.querySelectorAll("[data-wtab]").forEach(x=>x.classList.toggle("active",x.dataset.wtab===btn.dataset.wtab));
+      document.querySelectorAll("#wedding .tab-panel").forEach(x=>x.classList.remove("active"));
+      $(`wtab-${btn.dataset.wtab}`).classList.add("active");
+    });
     $("loginBtn").onclick = async () => {
-      const email = loginEmail($("loginId").value);
+      const rawId = $("loginId").value.trim();
+      const email = loginEmail(rawId);
       const password = $("loginPw").value;
       if (!password) {
         alert("비밀번호를 입력해줘.");
@@ -801,6 +1046,8 @@
         });
         session = { access_token: data.access_token, refresh_token: data.refresh_token, user: data.user };
         localStorage.setItem(KEY + "-session", JSON.stringify(session));
+        if ($("rememberId").checked) localStorage.setItem(LOGIN_ID_KEY, rawId);
+        else localStorage.removeItem(LOGIN_ID_KEY);
         await loadRemote();
         $("login").classList.add("hide");
       } catch (error) {
@@ -815,12 +1062,6 @@
     function renderTop(){
       $("coupleTitle").textContent = `${state.profile.meName} & ${state.profile.partnerName}`;
       $("seasonBadge").textContent = `${state.profile.season} 목표`;
-      $("phoneTotal").textContent = won(totalMoney());
-      $("phoneFree").textContent = freeMoney()>=0 ? won(freeMoney()) : "-"+won(Math.abs(freeMoney()));
-      $("prepDone").textContent = `${state.prep.filter(x=>x.status==="done").length}개 완료`;
-      $("homeWeddingMoney").textContent = won(weddingCost());
-      $("homeHouseMonthly").textContent = month(houseMonthly());
-      $("homeMonthlySave").textContent = won(state.money.monthlySavings);
     }
     function renderWedding(){
       const done = state.prep.filter(x=>x.status==="done").length;
@@ -831,13 +1072,28 @@
       $("weddingFinalMoney").textContent = won(weddingCost());
       $("weddingDeposit").textContent = won(weddingDeposit());
       $("weddingBalance").textContent = won(weddingBalance());
-      $("prepTable").innerHTML = state.prep.map(x=>`<tr><td><strong>${x.order}</strong></td><td><strong>${x.title}</strong></td><td>${x.memo}</td><td><button class="status ${x.status}" data-prep="${x.id}">${statusText(x.status)}</button></td></tr>`).join("");
-      document.querySelectorAll("[data-prep]").forEach(btn=>btn.onclick=()=>{const row=state.prep.find(x=>x.id===btn.dataset.prep);row.status=row.status==="todo"?"doing":row.status==="doing"?"done":"todo";save();});
+      $("weddingStepCount").textContent = `${state.prep.length}개`;
+      $("prepTimeline").innerHTML = state.prep.map(x=>`<button class="time-node ${x.status==="done"?"done":""}" data-time-step="${x.id}"><span>${x.order} · ${x.category||"기타"}</span>${x.title}</button>`).join("");
+      document.querySelectorAll("[data-time-step]").forEach(btn=>btn.onclick=()=>openStep(btn.dataset.timeStep));
+      $("prepTable").innerHTML = state.prep.map(x=>`<tr data-step="${x.id}"><td><strong>${x.order}</strong></td><td><strong>${x.title}</strong><div class="tags"><span class="tag soft">${x.category||"기타"}</span>${x.needsCandidate?`<span class="tag">후보 필요</span>`:""}</div></td><td>${x.memo}</td><td><button class="status ${x.status}" data-prep="${x.id}">${statusText(x.status)}</button></td></tr>`).join("");
+      document.querySelectorAll("[data-step]").forEach(row=>row.onclick=()=>openStep(row.dataset.step));
+      document.querySelectorAll("[data-prep]").forEach(btn=>btn.onclick=event=>{event.stopPropagation();const row=state.prep.find(x=>x.id===btn.dataset.prep);row.status=row.status==="todo"?"doing":row.status==="doing"?"done":"todo";save();});
       const byCat = {};
       state.wedding.forEach(x=>{ byCat[x.category]=(byCat[x.category]||0)+Number(x.actual||x.quote||0); });
       const max = Math.max(...Object.values(byCat),1);
       $("weddingBars").innerHTML = Object.entries(byCat).map(([k,v])=>`<div class="bar-row"><div><span>${k}</span><b>${won(v)}</b></div><div class="bar"><i style="--w:${pct(v,max)}%"></i></div></div>`).join("");
       $("weddingCards").innerHTML = state.wedding.map(card).join("");
+      renderBudget();
+    }
+    function renderBudget(){
+      const totals = state.budget.reduce((acc,x)=>{acc.quote+=Number(x.quote||0);acc.actual+=Number(x.actual||0);acc.deposit+=Number(x.deposit||0);acc.balance+=Number(x.balance||0);return acc;},{quote:0,actual:0,deposit:0,balance:0});
+      $("budgetQuoteTotal").textContent = won(totals.quote);
+      $("budgetActualTotal").textContent = won(totals.actual);
+      $("budgetDepositTotal").textContent = won(totals.deposit);
+      $("budgetBalanceTotal").textContent = won(totals.balance);
+      $("budgetTable").innerHTML = state.budget.map(x=>`<tr><td><input value="${x.item||""}" data-budget="${x.id}" data-key="item"></td><td><input value="${x.detail||""}" data-budget="${x.id}" data-key="detail"></td><td><input type="number" value="${x.quote||0}" data-budget="${x.id}" data-key="quote"></td><td><input type="number" value="${x.deposit||0}" data-budget="${x.id}" data-key="deposit"></td><td><input type="number" value="${x.balance||0}" data-budget="${x.id}" data-key="balance"></td><td><input type="number" value="${x.actual||0}" data-budget="${x.id}" data-key="actual"></td><td><select data-budget="${x.id}" data-key="payment"><option ${x.payment==="미정"?"selected":""}>미정</option><option ${x.payment==="카드"?"selected":""}>카드</option><option ${x.payment==="계좌이체"?"selected":""}>계좌이체</option><option ${x.payment==="현금"?"selected":""}>현금</option></select></td><td><select data-budget="${x.id}" data-key="payer"><option ${x.payer==="공동"?"selected":""}>공동</option><option ${x.payer==="수진"?"selected":""}>수진</option><option ${x.payer==="재준"?"selected":""}>재준</option><option ${x.payer==="기타"?"selected":""}>기타</option></select></td><td><select data-budget="${x.id}" data-key="status"><option ${x.status==="예정"?"selected":""}>예정</option><option ${x.status==="진행중"?"selected":""}>진행중</option><option ${x.status==="완료"?"selected":""}>완료</option></select></td><td><button class="delete-mini" data-delete-budget="${x.id}">×</button></td></tr>`).join("");
+      document.querySelectorAll("[data-budget]").forEach(input=>input.oninput=e=>{const row=state.budget.find(x=>x.id===e.target.dataset.budget);const key=e.target.dataset.key;row[key]=["quote","deposit","balance","actual"].includes(key)?Number(e.target.value):e.target.value;save();});
+      document.querySelectorAll("[data-delete-budget]").forEach(btn=>btn.onclick=()=>{state.budget=state.budget.filter(x=>x.id!==btn.dataset.deleteBudget);save();});
     }
     function card(x){
       return `<button class="candidate ${x.selected?"final":""}" data-open="${x.kind}:${x.id}"><div class="thumb">${x.photo?`<img src="${x.photo}" alt="">`:x.category}</div><div><h3>${x.name}</h3><p>${x.memo||"상세 내용을 입력하세요."}</p><div class="tags"><span class="tag ${x.selected?"green":"soft"}">${x.selected?"최종 선택":"후보"}</span><span class="tag">${x.payment||"미정"}</span>${x.kind==="house"?`<span class="tag soft">${month(x.monthly||0)}</span>`:""}</div></div><div class="price">${won(x.actual||x.quote||0)}</div></button>`;
@@ -858,8 +1114,13 @@
       $("moneyFree").textContent = freeMoney()>=0 ? won(freeMoney()) : "-"+won(Math.abs(freeMoney()));
       const max = Math.max(totalMoney(),1);
       $("savingBars").innerHTML = [["수진이 모은 돈",state.money.mySavings],["재준이 모은 돈",state.money.partnerSavings],["공동통장",state.money.jointSavings],["매월 저축 가능액",state.money.monthlySavings]].map(([label,value])=>`<div class="bar-row"><div><span>${label}</span><b>${won(value)}</b></div><div class="bar"><i style="--w:${pct(value,max)}%"></i></div></div>`).join("");
-      $("ledgerTable").innerHTML = state.ledger.map(x=>`<tr><td><input value="${x.name}" data-ledger="${x.id}" data-key="name"></td><td><input type="number" value="${x.amount}" data-ledger="${x.id}" data-key="amount"></td><td><select data-ledger="${x.id}" data-key="type"><option ${x.type==="저축"?"selected":""}>저축</option><option ${x.type==="지출"?"selected":""}>지출</option><option ${x.type==="수입"?"selected":""}>수입</option></select></td><td><select data-ledger="${x.id}" data-key="who"><option ${x.who==="함께"?"selected":""}>함께</option><option ${x.who==="수진"?"selected":""}>수진</option><option ${x.who==="재준"?"selected":""}>재준</option><option ${x.who==="공동"?"selected":""}>공동</option></select></td></tr>`).join("");
+      const monthly = {};
+      state.ledger.forEach(x=>{ monthly[x.month] = (monthly[x.month] || 0) + (x.type==="지출"?-Number(x.amount||0):Number(x.amount||0)); });
+      const monthlyMax = Math.max(...Object.values(monthly).map(v=>Math.abs(v)),1);
+      $("monthlyBars").innerHTML = Object.entries(monthly).sort().map(([label,value])=>`<div class="bar-row"><div><span>${label}</span><b>${value>=0?won(value):"-"+won(Math.abs(value))}</b></div><div class="bar"><i style="--w:${pct(Math.abs(value),monthlyMax)}%"></i></div></div>`).join("") || `<p style="color:var(--sub);font-weight:700">아직 월별 내역이 없어요.</p>`;
+      $("ledgerTable").innerHTML = state.ledger.map(x=>`<tr><td><input type="month" value="${x.month||""}" data-ledger="${x.id}" data-key="month"></td><td><input value="${x.name}" data-ledger="${x.id}" data-key="name"></td><td><input type="number" value="${x.amount}" data-ledger="${x.id}" data-key="amount"></td><td><select data-ledger="${x.id}" data-key="type"><option ${x.type==="저축"?"selected":""}>저축</option><option ${x.type==="지출"?"selected":""}>지출</option><option ${x.type==="수입"?"selected":""}>수입</option></select></td><td><select data-ledger="${x.id}" data-key="who"><option ${x.who==="함께"?"selected":""}>함께</option><option ${x.who==="수진"?"selected":""}>수진</option><option ${x.who==="재준"?"selected":""}>재준</option><option ${x.who==="공동"?"selected":""}>공동</option></select></td><td><button class="delete-mini" data-delete-ledger="${x.id}">×</button></td></tr>`).join("");
       document.querySelectorAll("[data-ledger]").forEach(input=>input.oninput=e=>{const row=state.ledger.find(x=>x.id===e.target.dataset.ledger);row[e.target.dataset.key]=e.target.dataset.key==="amount"?Number(e.target.value):e.target.value;save();});
+      document.querySelectorAll("[data-delete-ledger]").forEach(btn=>btn.onclick=()=>{state.ledger=state.ledger.filter(x=>x.id!==btn.dataset.deleteLedger);save();});
     }
     function bindCards(){ document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>openDetail(btn.dataset.open)); }
     function openDetail(ref){
@@ -885,12 +1146,88 @@
       row.name=$("dName").value;row.category=$("dCategory").value;row.quote=Number($("dQuote").value);row.actual=Number($("dActual").value);row.deposit=Number($("dDeposit").value);row.balance=Number($("dBalance").value);row.balanceDate=$("dBalanceDate").value;row.payment=$("dPayment").value;row.monthly=Number($("dMonthly").value);row.selected=$("dSelected").checked;row.memo=$("dMemo").value;
       $("detailModal").classList.remove("open"); save();
     };
+    $("deleteDetail").onclick = () => {
+      if(!editing) return;
+      if(!confirm("이 후보를 삭제할까요?")) return;
+      if(editing.kind==="wedding") state.wedding = state.wedding.filter(x=>x.id!==editing.id);
+      else state.houses = state.houses.filter(x=>x.id!==editing.id);
+      editing = null;
+      $("detailModal").classList.remove("open");
+      save();
+    };
+    function relatedCandidates(step){
+      const list = step.category === "신혼집" ? state.houses : state.wedding;
+      return list.filter(item => item.category === step.category || item.memo?.includes(step.title) || step.title.includes(item.category));
+    }
+    function openStep(id){
+      const step = state.prep.find(x=>x.id===id);
+      if(!step) return;
+      editingStep = id;
+      $("stepTitle").textContent = step.title;
+      $("sOrder").value = step.order || "";
+      $("sCategory").value = step.category || "";
+      $("sTitle").value = step.title || "";
+      $("sMemo").value = step.memo || "";
+      $("sStatus").value = step.status || "todo";
+      $("sNeedsCandidate").checked = !!step.needsCandidate;
+      renderSubtasks(step);
+      renderStepCandidates(step);
+      $("stepModal").classList.add("open");
+    }
+    function renderSubtasks(step){
+      $("subtaskList").innerHTML = (step.subtasks || []).map((item,index)=>`<div class="subtask-row"><strong>${index+1}</strong><input value="${item.title||""}" data-subtask="${index}" data-subkey="title"><select data-subtask="${index}" data-subkey="status"><option value="todo" ${item.status==="todo"?"selected":""}>예정</option><option value="doing" ${item.status==="doing"?"selected":""}>진행중</option><option value="done" ${item.status==="done"?"selected":""}>완료</option></select><button class="delete-mini" data-delete-subtask="${index}">×</button></div>`).join("");
+      document.querySelectorAll("[data-subtask]").forEach(input=>input.oninput=e=>{const row=state.prep.find(x=>x.id===editingStep);row.subtasks[Number(e.target.dataset.subtask)][e.target.dataset.subkey]=e.target.value;});
+      document.querySelectorAll("[data-delete-subtask]").forEach(btn=>btn.onclick=()=>{const row=state.prep.find(x=>x.id===editingStep);row.subtasks.splice(Number(btn.dataset.deleteSubtask),1);renderSubtasks(row);});
+    }
+    function renderStepCandidates(step){
+      const items = relatedCandidates(step);
+      $("stepCandidates").innerHTML = items.length ? items.map(card).join("") : `<div class="flow-item"><span>+</span>아직 연결된 후보가 없어요. 필요한 경우 후보 만들기를 눌러 추가하세요.</div>`;
+      bindCards();
+    }
+    $("closeStepModal").onclick = () => $("stepModal").classList.remove("open");
+    $("addSubtask").onclick = () => {
+      const row = state.prep.find(x=>x.id===editingStep);
+      if(!row) return;
+      row.subtasks ||= [];
+      row.subtasks.push({title:"새 세부단계",status:"todo"});
+      renderSubtasks(row);
+    };
+    $("saveStep").onclick = () => {
+      const row = state.prep.find(x=>x.id===editingStep);
+      if(!row) return;
+      row.order=$("sOrder").value;row.category=$("sCategory").value;row.title=$("sTitle").value;row.memo=$("sMemo").value;row.status=$("sStatus").value;row.needsCandidate=$("sNeedsCandidate").checked;
+      $("stepModal").classList.remove("open");
+      save();
+    };
+    $("deleteStep").onclick = () => {
+      if(!editingStep || !confirm("이 단계를 삭제할까요?")) return;
+      state.prep = state.prep.filter(x=>x.id!==editingStep);
+      editingStep = null;
+      $("stepModal").classList.remove("open");
+      save();
+    };
+    $("addStepCandidate").onclick = () => {
+      const step = state.prep.find(x=>x.id===editingStep);
+      if(!step) return;
+      const isHouse = step.category === "신혼집";
+      const item = {id:crypto.randomUUID(),kind:isHouse?"house":"wedding",category:step.category||"새 분류",name:`${step.category||"새"} 후보`,quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",monthly:0,selected:false,memo:`${step.title} 단계에서 추가한 후보`,photo:""};
+      if(isHouse) state.houses.push(item); else state.wedding.push(item);
+      save();
+      renderStepCandidates(step);
+      openDetail(`${item.kind}:${item.id}`);
+    };
     $("addWedding").onclick = () => { state.wedding.push({id:crypto.randomUUID(),kind:"wedding",category:"새 분류",name:"새 결혼식 후보",quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",selected:false,memo:"",photo:""}); save(); };
+    $("addBudget").onclick = () => { state.budget.push({id:crypto.randomUUID(),category:"기타",item:"새 예산 항목",detail:"",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"}); save(); };
     $("addHouse").onclick = () => { state.houses.push({id:crypto.randomUUID(),kind:"house",category:"집 후보",name:"새 집 후보",quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",monthly:0,selected:false,memo:"",photo:""}); save(); };
-    $("addLedger").onclick = () => { state.ledger.push({id:crypto.randomUUID(),name:"새 내역",amount:0,type:"저축",who:"함께"}); save(); };
+    $("addLedger").onclick = () => { state.ledger.push({id:crypto.randomUUID(),month:new Date().toISOString().slice(0,7),name:"새 내역",amount:0,type:"저축",who:"함께"}); save(); };
     $("saveBtn").onclick = () => saveRemote(true);
     $("resetBtn").onclick = () => { if(confirm("샘플값으로 되돌릴까요?")){ state = structuredClone(defaults); save(); } };
     function render(){ bind(); renderTop(); renderWedding(); renderHouse(); renderMoney(); bindCards(); }
+    const rememberedId = localStorage.getItem(LOGIN_ID_KEY);
+    if (rememberedId) {
+      $("loginId").value = rememberedId;
+      $("rememberId").checked = true;
+    }
     if (session?.access_token) {
       loadRemote().then(() => $("login").classList.add("hide")).catch(() => {
         localStorage.removeItem(KEY + "-session");
