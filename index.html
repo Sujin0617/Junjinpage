@@ -26,7 +26,7 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{
       min-height:100vh;
-      background:linear-gradient(90deg,#dff7df 0 292px,#fff 292px);
+      background:#fff;
       color:var(--ink);
       font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif;
       font-size:15px;
@@ -214,12 +214,35 @@
       min-height:100vh;
       max-width:1540px;
       margin:0 auto;
+      transition:grid-template-columns .22s ease;
+    }
+    .app.sidebar-collapsed{
+      grid-template-columns:86px minmax(0,1fr);
     }
     .sidebar{
       position:sticky;
       top:0;
       height:100vh;
       padding:32px 24px;
+      background:#dff7df;
+      overflow:hidden;
+      transition:padding .22s ease;
+    }
+    .sidebar-toggle{
+      position:absolute;
+      right:18px;
+      top:18px;
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      background:#fff;
+      border:1px solid rgba(47,125,73,.12);
+      color:var(--clover-deep);
+      font-size:20px;
+      font-weight:950;
+      box-shadow:var(--soft-shadow);
     }
     .brand{display:flex;align-items:center;gap:12px;font-weight:950}
     .brand .jj-logo{width:50px;height:50px;border-radius:18px;font-size:18px}
@@ -260,6 +283,24 @@
       background:#fff;
       color:var(--ink);
       box-shadow:var(--soft-shadow);
+    }
+    .app.sidebar-collapsed .sidebar{padding:24px 12px}
+    .app.sidebar-collapsed .brand{justify-content:center;margin-top:34px}
+    .app.sidebar-collapsed .brand>div:last-child,
+    .app.sidebar-collapsed .side-title,
+    .app.sidebar-collapsed .side-desc,
+    .app.sidebar-collapsed .side-clover,
+    .app.sidebar-collapsed .menu span{display:none}
+    .app.sidebar-collapsed .menu{left:12px;right:12px;bottom:24px}
+    .app.sidebar-collapsed .menu button{
+      justify-content:center;
+      padding:0;
+      font-size:0;
+    }
+    .app.sidebar-collapsed .menu button:before{
+      content:attr(data-short);
+      font-size:15px;
+      font-weight:950;
     }
     .main{min-width:0;padding:24px 34px 88px}
     .topbar{
@@ -761,15 +802,16 @@
 
   <div class="app">
     <aside class="sidebar">
+      <button class="sidebar-toggle" id="sidebarToggle" title="메뉴 접기">☰</button>
       <div class="brand"><div class="jj-logo">JJ</div><div>JJ의 행복한 결혼생활<small>박수진 & 이재준</small></div></div>
       <div class="side-title">행운처럼<br>쌓이는 우리.</div>
       <p class="side-desc">결혼식, 집, 돈 모으기를 따로 보되 마지막엔 하나의 생활 자금으로 연결해요.</p>
       <div class="side-clover clover"><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="stem"></i></div>
       <nav class="menu">
-        <button class="active" data-screen="home">홈 <span>01</span></button>
-        <button data-screen="wedding">결혼식 준비 <span>02</span></button>
-        <button data-screen="house">집 준비 <span>03</span></button>
-        <button data-screen="money">돈 모으기 <span>04</span></button>
+        <button class="active" data-screen="home" data-short="홈">홈 <span>01</span></button>
+        <button data-screen="wedding" data-short="식">결혼식 준비 <span>02</span></button>
+        <button data-screen="house" data-short="집">집 준비 <span>03</span></button>
+        <button data-screen="money" data-short="돈">돈 모으기 <span>04</span></button>
       </nav>
     </aside>
 
@@ -789,8 +831,8 @@
             <h1>우리의 준비 순서를 먼저 볼게요.</h1>
             <p>첫 화면은 돈보다 흐름을 먼저 보여줘요. 결혼식은 어떤 순서로 준비할지, 집은 어떤 단계로 알아볼지 가볍게 확인하고 들어갑니다.</p>
             <div class="profile-row">
-              <div class="field"><label>수진 이름</label><input id="meName"></div>
-              <div class="field"><label>재준 이름</label><input id="partnerName"></div>
+              <div class="field"><label>신랑 이름</label><input id="partnerName"></div>
+              <div class="field"><label>신부 이름</label><input id="meName"></div>
               <div class="field"><label>예상 시기</label><select id="season"><option>2026년 11월</option><option>2026년 12월</option><option>2026년 11-12월</option><option>아직 미정</option></select></div>
             </div>
             <div class="clover"><i class="leaf a"></i><i class="leaf b"></i><i class="leaf c"></i><i class="leaf d"></i><i class="stem"></i></div>
@@ -981,6 +1023,7 @@
   <script>
     const KEY = "jj-clover-wedding-v1";
     const LOGIN_ID_KEY = KEY + "-login-id";
+    const SIDEBAR_KEY = KEY + "-sidebar-collapsed";
     const SUPABASE_URL = "https://epqnkwpmsyfeczgribxa.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwcW5rd3Btc3lmZWN6Z3JpYnhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyNTA2NjUsImV4cCI6MjA5NTgyNjY2NX0.dvpSuUAJM3_tk9Mgsk_NxSaWvJ_YhYMKqBC1KNUtDrw";
     const fmt = new Intl.NumberFormat("ko-KR");
@@ -1218,6 +1261,19 @@
       window.scrollTo({top:0,behavior:"smooth"});
     }
     document.querySelectorAll("[data-screen]").forEach(x=>x.onclick=()=>nav(x.dataset.screen));
+    if (localStorage.getItem(SIDEBAR_KEY) === "1") document.querySelector(".app")?.classList.add("sidebar-collapsed");
+    $("sidebarToggle").onclick = () => {
+      const app = document.querySelector(".app");
+      app.classList.toggle("sidebar-collapsed");
+      const folded = app.classList.contains("sidebar-collapsed");
+      $("sidebarToggle").textContent = folded ? "›" : "☰";
+      $("sidebarToggle").title = folded ? "메뉴 열기" : "메뉴 접기";
+      localStorage.setItem(SIDEBAR_KEY, folded ? "1" : "0");
+    };
+    if (document.querySelector(".app")?.classList.contains("sidebar-collapsed")) {
+      $("sidebarToggle").textContent = "›";
+      $("sidebarToggle").title = "메뉴 열기";
+    }
     document.querySelectorAll("[data-wtab]").forEach(btn=>btn.onclick=()=>{
       document.querySelectorAll("[data-wtab]").forEach(x=>x.classList.toggle("active",x.dataset.wtab===btn.dataset.wtab));
       document.querySelectorAll("#wedding .tab-panel").forEach(x=>x.classList.remove("active"));
