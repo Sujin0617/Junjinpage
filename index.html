@@ -269,6 +269,7 @@
       gap:16px;
       margin-bottom:22px;
     }
+    .topbar.is-hidden{display:none}
     .hello{color:var(--sub);font-weight:850;font-size:14px}
     .hello strong{display:block;margin-top:4px;color:var(--ink);font-size:24px;letter-spacing:0}
     .actions{display:flex;gap:9px;align-items:center}
@@ -451,6 +452,114 @@
     .time-node span{display:block;color:var(--clover-deep);font-size:13px;margin-bottom:7px}
     .time-node.done{background:var(--clover-deep);color:#fff}
     .time-node.done span{color:#dcf9dd}
+    .wedding-workspace{
+      display:grid;
+      grid-template-columns:360px minmax(0,1fr);
+      gap:18px;
+      align-items:start;
+    }
+    .stage-list{
+      position:sticky;
+      top:24px;
+      display:grid;
+      gap:9px;
+      max-height:calc(100vh - 80px);
+      overflow:auto;
+      padding-right:4px;
+    }
+    .stage-card{
+      display:grid;
+      grid-template-columns:44px minmax(0,1fr) 62px;
+      gap:12px;
+      align-items:center;
+      min-height:76px;
+      padding:13px;
+      border-radius:22px;
+      background:#fff;
+      border:1px solid var(--line);
+      text-align:left;
+      box-shadow:var(--soft-shadow);
+    }
+    .stage-card.active{border-color:var(--clover);background:var(--clover-soft)}
+    .stage-card strong{
+      width:44px;height:44px;
+      display:grid;place-items:center;
+      border-radius:16px;
+      background:#edf9ed;
+      color:var(--clover-deep);
+      font-size:15px;
+      font-weight:950;
+    }
+    .stage-card h3{font-size:15px;line-height:1.3}
+    .stage-card p{margin-top:4px;color:var(--sub);font-size:12px;font-weight:800}
+    .stage-work{min-height:720px}
+    .stage-work-head{
+      position:relative;
+      overflow:hidden;
+      margin-bottom:14px;
+      padding:26px;
+      border-radius:30px;
+      background:linear-gradient(145deg,#fbfff9,#fff);
+      border:1px solid var(--line);
+      box-shadow:var(--soft-shadow);
+    }
+    .stage-work-head h3{margin-top:8px;font-size:34px;letter-spacing:0}
+    .stage-work-head p{margin-top:10px;max-width:760px;color:var(--sub);line-height:1.65;font-weight:720}
+    .stage-work-head .mini-actions{margin-top:18px}
+    .subtabs{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding:2px 1px 14px;
+    }
+    .subtabs button{
+      min-width:132px;
+      min-height:50px;
+      padding:10px 12px;
+      border-radius:17px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--text);
+      box-shadow:var(--soft-shadow);
+      text-align:left;
+      font-weight:950;
+    }
+    .subtabs button.active{background:var(--clover-deep);border-color:var(--clover-deep);color:#fff}
+    .subtask-pane{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 320px;
+      gap:14px;
+      align-items:start;
+      margin-bottom:14px;
+    }
+    .work-card{
+      padding:22px;
+      border-radius:26px;
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:var(--soft-shadow);
+    }
+    .work-card h3{font-size:21px;margin-bottom:12px}
+    .work-card p{color:var(--sub);line-height:1.65;font-weight:720}
+    .check-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      min-height:56px;
+      padding:12px 14px;
+      border-radius:18px;
+      background:#fbfdfb;
+      border:1px solid var(--line);
+      font-weight:900;
+    }
+    .guest-tools{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-bottom:14px;
+    }
+    .guest-table td input,.guest-table td select{min-height:38px;padding:0 9px;border-radius:12px}
     .budget-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
     .overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
     .stat{min-height:126px;border-radius:24px;padding:18px}
@@ -603,8 +712,9 @@
       .app{grid-template-columns:1fr}
       .sidebar{display:none}
       .main{padding:18px 14px 92px}
-      .home-grid,.two-col,.saving-layout,.detail{grid-template-columns:1fr}
+      .home-grid,.two-col,.saving-layout,.detail,.wedding-workspace,.subtask-pane{grid-template-columns:1fr}
       .module-grid,.overview,.graph-grid,.program-grid,.home-flow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .stage-list{position:relative;top:auto;grid-template-columns:repeat(2,minmax(0,1fr));max-height:none;padding-right:0}
       .bottom-tabs{display:grid}
     }
     @media(max-width:760px){
@@ -613,9 +723,10 @@
       .hero{padding:24px;border-radius:28px;min-height:auto}
       .hero h1{font-size:37px}
       .hero .clover{display:none}
-      .profile-row,.module-grid,.home-flow-grid,.overview,.graph-grid,.program-grid,.saving-form,.detail-fields,.subtask-row{grid-template-columns:1fr}
+      .profile-row,.module-grid,.home-flow-grid,.overview,.graph-grid,.program-grid,.saving-form,.detail-fields,.subtask-row,.guest-tools,.stage-list{grid-template-columns:1fr}
       .section-head{align-items:flex-start;flex-direction:column}
       .section-head h2{font-size:28px}
+      .stage-work-head h3{font-size:28px}
       .candidate{grid-template-columns:1fr}
       .thumb{width:100%;height:150px}
       .price{text-align:left}
@@ -712,20 +823,56 @@
       </section>
 
       <section class="screen" id="wedding">
-        <div class="section-head"><div><h2>결혼식 준비</h2><p>과정은 천천히 따라가고, 예산은 엑셀처럼 한 표에서 직접 씁니다.</p></div><button class="primary" id="addWedding">후보 추가</button></div>
+        <div class="section-head"><div><h2>결혼식 준비</h2><p>엑셀 체크리스트 흐름을 기준으로 단계별 작업을 열고, 예산과 보증인원은 별도 탭에서 표처럼 직접 씁니다.</p></div></div>
         <div class="tabs">
-          <button class="active" data-wtab="process">과정</button>
-          <button data-wtab="budget">예산</button>
+          <button class="active" data-wtab="checklist">결혼준비체크리스트</button>
+          <button data-wtab="guest">결혼식 보증인원 및 식대 계산기</button>
+          <button data-wtab="budget">결혼예산</button>
         </div>
-        <div class="tab-panel active" id="wtab-process">
-          <div class="timeline" id="prepTimeline"></div>
-          <div class="graph-grid">
-            <div class="graph-card"><h3>결혼식 준비 퍼센트</h3><div class="donut-wrap"><div class="donut" id="weddingDonut">0%</div><p style="color:var(--sub);line-height:1.7;font-weight:700">정확한 날짜표가 아니라 우리 속도에 맞춰 완료만 체크합니다.</p></div></div>
-            <div class="graph-card"><h3>진행 요약</h3><div class="overview" style="grid-template-columns:repeat(2,1fr);margin:0"><div class="stat"><span>진행률</span><strong id="weddingProgressText">0%</strong></div><div class="stat"><span>전체 단계</span><strong id="weddingStepCount">0개</strong></div></div></div>
+        <div class="tab-panel active" id="wtab-checklist">
+          <div class="wedding-workspace">
+            <aside class="stage-list" id="stageList"></aside>
+            <section class="stage-work">
+              <div class="stage-work-head">
+                <span class="badge" id="activeStageMeta"><span class="dot"></span>01</span>
+                <h3 id="activeStageTitle">결혼준비과정</h3>
+                <p id="activeStageMemo">왼쪽에서 단계를 선택하면 여기에서 세부작업을 채워요.</p>
+                <div class="mini-actions">
+                  <button class="primary" id="markStageDone">단계완료</button>
+                  <button class="light-btn" id="editStageOpen">단계 상세 편집</button>
+                  <button class="light-btn" id="addWedding">후보 추가</button>
+                </div>
+              </div>
+              <div class="subtabs" id="subtaskTabs"></div>
+              <div id="subtaskWork"></div>
+              <div class="work-card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                  <h3>이 단계 후보 스택</h3>
+                  <span class="tag soft">필요한 만큼 추가</span>
+                </div>
+                <div class="candidate-list" id="stageInlineCandidates"></div>
+              </div>
+            </section>
           </div>
-          <div class="two-col">
-            <div class="panel"><table class="table"><thead><tr><th>순서</th><th>큰 과정</th><th>세부 확인</th><th>상태</th></tr></thead><tbody id="prepTable"></tbody></table></div>
-            <div class="panel"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h2 style="font-size:22px">후보 스택</h2><span class="tag soft">단계별로 연결</span></div><div class="candidate-list" id="weddingCards"></div></div>
+        </div>
+        <div class="tab-panel" id="wtab-guest">
+          <div class="guest-tools">
+            <div class="stat"><span>예상 참석</span><strong id="guestExpected">0명</strong><small>예상 참석 기준</small></div>
+            <div class="stat"><span>보증인원</span><strong id="guestGuaranteeText">0명</strong><small>직접 입력 가능</small></div>
+            <div class="stat"><span>예상 식대</span><strong id="guestMealText">0원</strong><small>성인 식대 기준</small></div>
+            <div class="stat"><span>실제 참석</span><strong id="guestActual">0명</strong><small>본식 후 체크</small></div>
+          </div>
+          <div class="panel" style="margin-bottom:14px">
+            <div class="saving-form">
+              <div class="field"><label>성인 식대</label><input type="number" id="guestAdultPrice"></div>
+              <div class="field"><label>소인 식대</label><input type="number" id="guestChildPrice"></div>
+              <div class="field"><label>보증인원</label><input type="number" id="guestGuarantee"></div>
+              <div class="field"><label>메모</label><input id="guestMemo" placeholder="웨딩홀 식대 조건, 추가금 등"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h2 style="font-size:22px">하객 리스트</h2><button class="light-btn" id="addGuest">하객 추가</button></div>
+            <table class="table guest-table"><thead><tr><th>측</th><th>관계</th><th>이름/그룹</th><th>인원</th><th>예상 참석</th><th>청첩장</th><th>실제 참석</th><th>삭제</th></tr></thead><tbody id="guestTable"></tbody></table>
           </div>
         </div>
         <div class="tab-panel" id="wtab-budget">
@@ -897,8 +1044,30 @@
         {id:"b23",category:"혼주",item:"혼주 메이크업",detail:"홀 내부/외부 예약",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
         {id:"b24",category:"예복",item:"신랑 예복",detail:"맞춤/기성복/대여",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
         {id:"b25",category:"예물",item:"결혼반지",detail:"명품/청담/종로 후보",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
-        {id:"b26",category:"결혼후",item:"답례품",detail:"필요 시 수량/단가",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"}
+        {id:"b26",category:"예물",item:"가방/시계",detail:"예물 후보, 구매 방식",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b27",category:"하객",item:"답례품",detail:"필요 시 수량/단가",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b28",category:"신혼여행",item:"항공권",detail:"항공권, 수하물, 좌석",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b29",category:"신혼여행",item:"숙소",detail:"숙소, 리조트, 예약금",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b30",category:"신혼여행",item:"교통비/경비",detail:"현지 교통, 환전, 식비, 투어",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b31",category:"혼수",item:"가전",detail:"냉장고, 세탁기, TV, 생활가전",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b32",category:"혼수",item:"가구/침구",detail:"거실, 서재, 주방, 침구류",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b33",category:"신혼집",item:"보증금/계약금",detail:"전세/월세/매매 계약금과 보증금",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b34",category:"신혼집",item:"세금/법무사비",detail:"취득세, 등기, 법무사비",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"},
+        {id:"b35",category:"신혼집",item:"부동산중개비",detail:"중개보수, 관리비 선납 등",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"}
       ],
+      guest:{
+        adultPrice:80000,
+        childPrice:50000,
+        guarantee:0,
+        memo:"",
+        list:[
+          {id:"g1",side:"신랑",relation:"가족",name:"신랑측 가족",count:0,expected:"예정",invite:"미전달",actual:"미정"},
+          {id:"g2",side:"신부",relation:"가족",name:"신부측 가족",count:0,expected:"예정",invite:"미전달",actual:"미정"},
+          {id:"g3",side:"신랑",relation:"친구",name:"신랑 친구",count:0,expected:"예정",invite:"미전달",actual:"미정"},
+          {id:"g4",side:"신부",relation:"친구",name:"신부 친구",count:0,expected:"예정",invite:"미전달",actual:"미정"},
+          {id:"g5",side:"함께",relation:"회사/지인",name:"회사/지인",count:0,expected:"예정",invite:"미전달",actual:"미정"}
+        ]
+      },
       programs:[
         {id:"lh",title:"LH 지원",status:"확인필요",memo:"공고명, 접수일, 자격, 서류를 직접 확인해서 기록"},
         {id:"sh",title:"SH 지원",status:"확인필요",memo:"공고명, 소득/자산 기준, 신청 절차를 직접 확인해서 기록"},
@@ -917,6 +1086,8 @@
     let state = JSON.parse(localStorage.getItem(KEY)||"null") || structuredClone(defaults);
     let editing = null;
     let editingStep = null;
+    let activeStageId = null;
+    let activeSubtaskIndex = 0;
     let session = JSON.parse(localStorage.getItem(KEY + "-session") || "null");
     let saveTimer = null;
     function normalizeState(){
@@ -924,6 +1095,9 @@
       state.money = {...defaults.money, ...(state.money || {})};
       state.wedding = Array.isArray(state.wedding) ? state.wedding : structuredClone(defaults.wedding);
       state.budget = Array.isArray(state.budget) && state.budget.length ? state.budget : structuredClone(defaults.budget);
+      defaults.budget.filter(item => !state.budget.some(row => row.id === item.id)).forEach(item => state.budget.push(structuredClone(item)));
+      state.guest = {...structuredClone(defaults.guest), ...(state.guest || {})};
+      state.guest.list = Array.isArray(state.guest.list) ? state.guest.list : structuredClone(defaults.guest.list);
       state.houses = Array.isArray(state.houses) ? state.houses : structuredClone(defaults.houses);
       state.programs = Array.isArray(state.programs) ? state.programs : structuredClone(defaults.programs);
       state.ledger = Array.isArray(state.ledger) ? state.ledger : structuredClone(defaults.ledger);
@@ -945,6 +1119,7 @@
         item.subtasks ||= [];
         item.needsCandidate = !!item.needsCandidate;
       });
+      if (!activeStageId || !state.prep.some(item => item.id === activeStageId)) activeStageId = state.prep[0]?.id || null;
     }
     normalizeState();
     const save = () => {
@@ -1023,6 +1198,7 @@
       document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
       $(screen).classList.add("active");
       document.querySelectorAll("[data-screen]").forEach(x=>x.classList.toggle("active",x.dataset.screen===screen));
+      document.querySelector(".topbar")?.classList.toggle("is-hidden", screen !== "home");
       window.scrollTo({top:0,behavior:"smooth"});
     }
     document.querySelectorAll("[data-screen]").forEach(x=>x.onclick=()=>nav(x.dataset.screen));
@@ -1072,26 +1248,103 @@
       $("seasonBadge").textContent = `${state.profile.season} 목표`;
     }
     function renderWedding(){
-      const done = state.prep.filter(x=>x.status==="done").length;
-      const progress = pct(done,state.prep.length);
-      $("weddingProgressText").textContent = `${progress}%`;
-      $("weddingDonut").textContent = `${progress}%`;
-      $("weddingDonut").style.setProperty("--p", progress);
-      $("weddingFinalMoney").textContent = won(weddingCost());
-      $("weddingDeposit").textContent = won(weddingDeposit());
-      $("weddingBalance").textContent = won(weddingBalance());
-      $("weddingStepCount").textContent = `${state.prep.length}개`;
-      $("prepTimeline").innerHTML = state.prep.map(x=>`<button class="time-node ${x.status==="done"?"done":""}" data-time-step="${x.id}"><span>${x.order} · ${x.category||"기타"}</span>${x.title}</button>`).join("");
-      document.querySelectorAll("[data-time-step]").forEach(btn=>btn.onclick=()=>openStep(btn.dataset.timeStep));
-      $("prepTable").innerHTML = state.prep.map(x=>`<tr data-step="${x.id}"><td><strong>${x.order}</strong></td><td><strong>${x.title}</strong><div class="tags"><span class="tag soft">${x.category||"기타"}</span>${x.needsCandidate?`<span class="tag">후보 필요</span>`:""}</div></td><td>${x.memo}</td><td><button class="status ${x.status}" data-prep="${x.id}">${statusText(x.status)}</button></td></tr>`).join("");
-      document.querySelectorAll("[data-step]").forEach(row=>row.onclick=()=>openStep(row.dataset.step));
-      document.querySelectorAll("[data-prep]").forEach(btn=>btn.onclick=event=>{event.stopPropagation();const row=state.prep.find(x=>x.id===btn.dataset.prep);row.status=row.status==="todo"?"doing":row.status==="doing"?"done":"todo";save();});
-      const byCat = {};
-      state.wedding.forEach(x=>{ byCat[x.category]=(byCat[x.category]||0)+Number(x.actual||x.quote||0); });
-      const max = Math.max(...Object.values(byCat),1);
-      $("weddingBars").innerHTML = Object.entries(byCat).map(([k,v])=>`<div class="bar-row"><div><span>${k}</span><b>${won(v)}</b></div><div class="bar"><i style="--w:${pct(v,max)}%"></i></div></div>`).join("");
-      $("weddingCards").innerHTML = state.wedding.map(card).join("");
+      renderChecklist();
+      renderGuest();
       renderBudget();
+    }
+    function renderChecklist(){
+      const step = state.prep.find(x=>x.id===activeStageId) || state.prep[0];
+      if (!step) return;
+      activeStageId = step.id;
+      if (activeSubtaskIndex >= (step.subtasks || []).length) activeSubtaskIndex = 0;
+      $("stageList").innerHTML = state.prep.map(x=>`
+        <button class="stage-card ${x.id===activeStageId?"active":""}" data-stage="${x.id}">
+          <strong>${x.order}</strong>
+          <div><h3>${x.title}</h3><p>${x.category} · ${statusText(x.status)}</p></div>
+          <span class="status ${x.status}">${statusText(x.status)}</span>
+        </button>
+      `).join("");
+      document.querySelectorAll("[data-stage]").forEach(btn=>btn.onclick=()=>{ activeStageId = btn.dataset.stage; activeSubtaskIndex = 0; renderChecklist(); });
+      $("activeStageMeta").innerHTML = `<span class="dot"></span>${step.order} · ${step.category}`;
+      $("activeStageTitle").textContent = step.title;
+      $("activeStageMemo").textContent = step.memo || "이 단계에서 확인할 내용을 적어두세요.";
+      $("markStageDone").textContent = step.status === "done" ? "완료취소" : "단계완료";
+      const subtasks = step.subtasks?.length ? step.subtasks : [{title:"기본 작업",status:step.status}];
+      $("subtaskTabs").innerHTML = subtasks.map((item,index)=>`
+        <button class="${index===activeSubtaskIndex?"active":""}" data-subtab="${index}">
+          ${String(index+1).padStart(2,"0")}<br>${item.title || "세부작업"}
+        </button>
+      `).join("");
+      document.querySelectorAll("[data-subtab]").forEach(btn=>btn.onclick=()=>{ activeSubtaskIndex = Number(btn.dataset.subtab); renderChecklist(); });
+      const sub = subtasks[activeSubtaskIndex] || subtasks[0];
+      $("subtaskWork").innerHTML = `
+        <div class="subtask-pane">
+          <div class="work-card">
+            <h3>${sub.title || "세부작업"}</h3>
+            <p>정보를 알아보는 중이면 진행중, 끝났으면 완료로 바꿔두면 왼쪽 전체 단계에도 바로 반영돼요.</p>
+            <div class="check-row" style="margin-top:14px">
+              <span>세부작업 상태</span>
+              <select data-inline-sub-status style="max-width:160px">
+                <option value="todo" ${sub.status==="todo"?"selected":""}>예정</option>
+                <option value="doing" ${sub.status==="doing"?"selected":""}>진행중</option>
+                <option value="done" ${sub.status==="done"?"selected":""}>완료</option>
+              </select>
+            </div>
+            <div class="field" style="margin-top:12px"><label>작업 메모</label><textarea data-inline-step-memo>${step.memo || ""}</textarea></div>
+          </div>
+          <div class="work-card">
+            <h3>단계 요약</h3>
+            <div class="bar-row"><div><span>세부 완료</span><b>${step.subtasks?.filter(x=>x.status==="done").length || 0}/${step.subtasks?.length || 0}</b></div><div class="bar"><i style="--w:${pct(step.subtasks?.filter(x=>x.status==="done").length || 0, step.subtasks?.length || 1)}%"></i></div></div>
+            <div class="tags" style="margin-top:14px">
+              ${step.needsCandidate ? `<span class="tag soft">후보/견적 필요</span>` : `<span class="tag">체크 중심</span>`}
+              <span class="tag ${step.status==="done"?"green":"soft"}">${statusText(step.status)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+      const statusInput = document.querySelector("[data-inline-sub-status]");
+      if (statusInput && step.subtasks?.[activeSubtaskIndex]) statusInput.oninput = e => {
+        step.subtasks[activeSubtaskIndex].status = e.target.value;
+        const done = step.subtasks.filter(x=>x.status==="done").length;
+        step.status = done === step.subtasks.length ? "done" : step.subtasks.some(x=>x.status==="doing" || x.status==="done") ? "doing" : "todo";
+        save();
+      };
+      const memoInput = document.querySelector("[data-inline-step-memo]");
+      if (memoInput) memoInput.oninput = e => { step.memo = e.target.value; save(); };
+      $("stageInlineCandidates").innerHTML = relatedCandidates(step).length ? relatedCandidates(step).map(card).join("") : `<div class="flow-item"><span>+</span>아직 연결된 후보가 없어요. 후보 추가를 누르면 이 단계 분류로 바로 만들어져요.</div>`;
+      bindCards();
+    }
+    function renderGuest(){
+      const guest = state.guest;
+      const expected = guest.list.reduce((sum,x)=>sum + (x.expected==="불참" ? 0 : Number(x.count||0)),0);
+      const actual = guest.list.reduce((sum,x)=>sum + (x.actual==="참석" ? Number(x.count||0) : 0),0);
+      const guarantee = Number(guest.guarantee || 0);
+      const mealBase = Math.max(expected, guarantee);
+      $("guestExpected").textContent = `${expected}명`;
+      $("guestActual").textContent = `${actual}명`;
+      $("guestGuaranteeText").textContent = `${guarantee}명`;
+      $("guestMealText").textContent = won(mealBase * Number(guest.adultPrice || 0));
+      $("guestAdultPrice").value = guest.adultPrice || 0;
+      $("guestChildPrice").value = guest.childPrice || 0;
+      $("guestGuarantee").value = guest.guarantee || 0;
+      $("guestMemo").value = guest.memo || "";
+      ["guestAdultPrice","guestChildPrice","guestGuarantee","guestMemo"].forEach(id => $(id).oninput = e => {
+        const key = id === "guestAdultPrice" ? "adultPrice" : id === "guestChildPrice" ? "childPrice" : id === "guestGuarantee" ? "guarantee" : "memo";
+        guest[key] = key === "memo" ? e.target.value : Number(e.target.value);
+        save();
+      });
+      $("guestTable").innerHTML = guest.list.map(x=>`<tr>
+        <td><select data-guest="${x.id}" data-key="side"><option ${x.side==="신랑"?"selected":""}>신랑</option><option ${x.side==="신부"?"selected":""}>신부</option><option ${x.side==="함께"?"selected":""}>함께</option></select></td>
+        <td><input value="${x.relation || ""}" data-guest="${x.id}" data-key="relation"></td>
+        <td><input value="${x.name || ""}" data-guest="${x.id}" data-key="name"></td>
+        <td><input type="number" value="${x.count || 0}" data-guest="${x.id}" data-key="count"></td>
+        <td><select data-guest="${x.id}" data-key="expected"><option ${x.expected==="예정"?"selected":""}>예정</option><option ${x.expected==="참석가능"?"selected":""}>참석가능</option><option ${x.expected==="불참"?"selected":""}>불참</option></select></td>
+        <td><select data-guest="${x.id}" data-key="invite"><option ${x.invite==="미전달"?"selected":""}>미전달</option><option ${x.invite==="전달완료"?"selected":""}>전달완료</option></select></td>
+        <td><select data-guest="${x.id}" data-key="actual"><option ${x.actual==="미정"?"selected":""}>미정</option><option ${x.actual==="참석"?"selected":""}>참석</option><option ${x.actual==="불참"?"selected":""}>불참</option></select></td>
+        <td><button class="delete-mini" data-delete-guest="${x.id}">×</button></td>
+      </tr>`).join("");
+      document.querySelectorAll("[data-guest]").forEach(input=>input.oninput=e=>{const row=guest.list.find(x=>x.id===e.target.dataset.guest);const key=e.target.dataset.key;row[key]=key==="count"?Number(e.target.value):e.target.value;save();});
+      document.querySelectorAll("[data-delete-guest]").forEach(btn=>btn.onclick=()=>{guest.list=guest.list.filter(x=>x.id!==btn.dataset.deleteGuest);save();});
     }
     function renderBudget(){
       const totals = state.budget.reduce((acc,x)=>{acc.quote+=Number(x.quote||0);acc.actual+=Number(x.actual||0);acc.deposit+=Number(x.deposit||0);acc.balance+=Number(x.balance||0);return acc;},{quote:0,actual:0,deposit:0,balance:0});
@@ -1224,8 +1477,24 @@
       renderStepCandidates(step);
       openDetail(`${item.kind}:${item.id}`);
     };
-    $("addWedding").onclick = () => { state.wedding.push({id:crypto.randomUUID(),kind:"wedding",category:"새 분류",name:"새 결혼식 후보",quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",selected:false,memo:"",photo:""}); save(); };
+    $("markStageDone").onclick = () => {
+      const step = state.prep.find(x=>x.id===activeStageId);
+      if(!step) return;
+      step.status = step.status === "done" ? "todo" : "done";
+      step.subtasks?.forEach(item => item.status = step.status);
+      save();
+    };
+    $("editStageOpen").onclick = () => activeStageId && openStep(activeStageId);
+    $("addWedding").onclick = () => {
+      const step = state.prep.find(x=>x.id===activeStageId);
+      const isHouse = step?.category === "신혼집";
+      const item = {id:crypto.randomUUID(),kind:isHouse?"house":"wedding",category:step?.category||"새 분류",name:`${step?.category||"새"} 후보`,quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",monthly:0,selected:false,memo:step ? `${step.title} 단계에서 추가한 후보` : "",photo:""};
+      if(isHouse) state.houses.push(item); else state.wedding.push(item);
+      save();
+      openDetail(`${item.kind}:${item.id}`);
+    };
     $("addBudget").onclick = () => { state.budget.push({id:crypto.randomUUID(),category:"기타",item:"새 예산 항목",detail:"",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"}); save(); };
+    $("addGuest").onclick = () => { state.guest.list.push({id:crypto.randomUUID(),side:"함께",relation:"",name:"새 하객 그룹",count:0,expected:"예정",invite:"미전달",actual:"미정"}); save(); };
     $("addHouse").onclick = () => { state.houses.push({id:crypto.randomUUID(),kind:"house",category:"집 후보",name:"새 집 후보",quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",monthly:0,selected:false,memo:"",photo:""}); save(); };
     $("addLedger").onclick = () => { state.ledger.push({id:crypto.randomUUID(),month:new Date().toISOString().slice(0,7),name:"새 내역",amount:0,type:"저축",who:"함께"}); save(); };
     $("saveBtn").onclick = () => saveRemote(true);
