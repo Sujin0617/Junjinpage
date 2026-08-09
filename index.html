@@ -644,6 +644,7 @@
     }
     .step-field textarea{min-height:58px}
     .step-field.wide{grid-column:1/-1}
+    .place-row{display:grid;grid-template-columns:minmax(0,1fr) 96px;gap:7px}
     .map-actions{display:flex;gap:6px;margin-top:6px}
     .map-actions button{
       height:30px;
@@ -655,6 +656,16 @@
       font-weight:950;
       border:1px solid #d6f3d8;
     }
+    .map-preview{
+      width:100%;
+      height:150px;
+      margin-top:8px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .map-preview iframe{width:100%;height:100%;border:0}
     .candidate-focus{
       margin-top:12px;
       padding:12px;
@@ -1029,14 +1040,13 @@
             <div class="field"><label>매월 함께 저축 가능액</label><input type="number" id="monthlySavings"></div>
             <div class="field"><label>신부 매월 저축 가능액</label><input type="number" id="myMonthlySavings"></div>
             <div class="field"><label>신랑 매월 저축 가능액</label><input type="number" id="partnerMonthlySavings"></div>
-            <div class="field"><label>수진 용돈/고정지출</label><input type="number" id="myAllowance"></div>
-            <div class="field"><label>재준 용돈/고정지출</label><input type="number" id="partnerAllowance"></div>
-            <div class="field"><label>주 저축 계좌/카드</label><input id="savingAccount" placeholder="예: 토스뱅크, 카카오뱅크, 신한카드"></div>
+      <div class="field"><label>신부 용돈/고정지출</label><input type="number" id="myAllowance"></div>
+      <div class="field"><label>신랑 용돈/고정지출</label><input type="number" id="partnerAllowance"></div>
             <div class="field"><label>현재까지 이자</label><input type="number" id="interestSaved"></div>
           </div></div>
         </div>
         <div class="panel" style="margin-top:16px"><h2 style="font-size:18px;margin-bottom:12px">월별 가계부 흐름</h2><div class="bar-list" id="monthlyBars"></div></div>
-        <div class="panel" style="margin-top:16px"><table class="table ledger-table"><thead><tr><th>월</th><th>내역</th><th>금액</th><th>구분</th><th>담당</th><th>계좌/카드</th><th>이자</th><th>삭제</th></tr></thead><tbody id="ledgerTable"></tbody></table></div>
+        <div class="panel" style="margin-top:16px"><table class="table ledger-table"><thead><tr><th>월</th><th>내역</th><th>금액</th><th>구분</th><th>담당</th><th>이자</th><th>삭제</th></tr></thead><tbody id="ledgerTable"></tbody></table></div>
       </section>
     </main>
   </div>
@@ -1093,6 +1103,7 @@
     </div>
   </div>
 
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script>
     const KEY = "jj-clover-wedding-v1";
     const LOGIN_ID_KEY = KEY + "-login-id";
@@ -1106,12 +1117,12 @@
     const pct = (a,b) => !b ? 0 : Math.max(0, Math.min(100, Math.round((Number(a)||0)/(Number(b)||1)*100)));
     const defaults = {
       profile:{meName:"박수진",partnerName:"이재준",season:"2026년 11-12월"},
-      money:{mySavings:18000000,partnerSavings:22000000,jointSavings:8000000,monthlySavings:3000000,myMonthlySavings:1500000,partnerMonthlySavings:1500000,myAllowance:800000,partnerAllowance:800000,savingAccount:"",interestSaved:0},
+      money:{mySavings:18000000,partnerSavings:22000000,jointSavings:8000000,monthlySavings:3000000,myMonthlySavings:1500000,partnerMonthlySavings:1500000,myAllowance:800000,partnerAllowance:800000,interestSaved:0},
       prep:[
         {id:"p01",order:"01",period:"시작",category:"첫인사",title:"재준 부모님 첫인사",memo:"장소, 예산, 준비물, 중요내용을 따로 기록해요.",status:"todo",needsCandidate:false,subtasks:[{title:"장소",status:"todo"},{title:"예산",status:"todo"},{title:"준비물",status:"todo"},{title:"중요내용",status:"todo"}]},
         {id:"p02",order:"02",period:"시작",category:"첫인사",title:"수진 부모님 첫인사",memo:"장소, 예산, 준비물, 중요내용을 따로 기록해요.",status:"todo",needsCandidate:false,subtasks:[{title:"장소",status:"todo"},{title:"예산",status:"todo"},{title:"준비물",status:"todo"},{title:"중요내용",status:"todo"}]},
         {id:"p03",order:"03",period:"1년-1년6개월 전",category:"웨딩홀",title:"웨딩홀 기준 정하기",memo:"택일, 일정, 우선순위부터 정리하고 후보 비교로 넘어갑니다.",status:"doing",needsCandidate:false,subtasks:[{title:"택일",status:"todo"},{title:"일정 잡기",status:"doing"},{title:"웨딩홀 우선순위 정하기",status:"todo"}]},
-        {id:"p04",order:"04",period:"1년-1년6개월 전",category:"웨딩홀",title:"웨딩홀 후보와 투어",memo:"후보마다 장소, 제공 항목, 식대, 무료제공, 주차, 위치, 동선, 보증인원을 기록해요.",status:"doing",needsCandidate:true,subtasks:[{title:"웨딩홀 후보",status:"doing"},{title:"웨딩홀 투어",status:"todo"},{title:"장소/위치",status:"todo"},{title:"제공하는 것",status:"todo"},{title:"식대/보증인원",status:"todo"},{title:"무료제공",status:"todo"},{title:"주차/동선",status:"todo"}]},
+        {id:"p04",order:"04",period:"1년-1년6개월 전",category:"웨딩홀",title:"웨딩홀 후보 선정",memo:"후보마다 장소, 제공 항목, 식대, 무료제공, 주차, 위치, 동선, 보증인원을 기록해요.",status:"doing",needsCandidate:true,subtasks:[{title:"웨딩홀 후보",status:"doing"},{title:"웨딩홀 투어",status:"todo"},{title:"제공하는 것",status:"todo"},{title:"식대/보증인원",status:"todo"},{title:"무료제공",status:"todo"},{title:"주차/동선",status:"todo"}]},
         {id:"p05",order:"05",period:"1년-1년6개월 전",category:"웨딩홀",title:"웨딩홀 계약",memo:"후보 중 최종 선택한 곳을 기준으로 계약금, 잔금, 결제수단, 예산을 연결합니다.",status:"todo",needsCandidate:true,subtasks:[{title:"최종 후보 선택",status:"todo"},{title:"계약 조건 확인",status:"todo"},{title:"계약금 입력",status:"todo"},{title:"잔금일 입력",status:"todo"},{title:"예산 반영",status:"todo"}]},
         {id:"p06",order:"06",period:"1년-1년6개월 전",category:"스드메&플래너",title:"플래너",memo:"동행/비동행, 견적, 포함 서비스, 추가금, 계약 조건을 비교해요.",status:"todo",needsCandidate:true,subtasks:[{title:"플래너 후보",status:"todo"},{title:"견적 비교",status:"todo"},{title:"계약 조건",status:"todo"},{title:"예산 반영",status:"todo"}]},
         {id:"p07",order:"07",period:"1년-1년6개월 전",category:"스드메&플래너",title:"스튜디오",memo:"스튜디오 후보, 원본/수정본, 촬영 구성, 헬퍼비와 추가금을 확인해요.",status:"todo",needsCandidate:true,subtasks:[{title:"스튜디오 후보",status:"todo"},{title:"촬영 구성",status:"todo"},{title:"원본/수정본",status:"todo"},{title:"추가금",status:"todo"}]},
@@ -1243,6 +1254,11 @@
         item.status ||= "todo";
         item.subtasks ||= [];
         item.needsCandidate = !!item.needsCandidate;
+        if (item.id === "p04" && item.title === "웨딩홀 후보와 투어") item.title = "웨딩홀 후보 선정";
+      });
+      state.ledger?.forEach(row => {
+        if (row.who === "수진") row.who = "신부";
+        if (row.who === "재준") row.who = "신랑";
       });
       if (!activeStageId || !state.prep.some(item => item.id === activeStageId)) activeStageId = state.prep[0]?.id || null;
     }
@@ -1388,8 +1404,6 @@
     function bind(){
       ["meName","partnerName","season"].forEach(id=>{$(id).value=state.profile[id];$(id).oninput=e=>{state.profile[id]=e.target.value;save();};});
       ["mySavings","partnerSavings","jointSavings","monthlySavings","myMonthlySavings","partnerMonthlySavings","myAllowance","partnerAllowance","interestSaved"].forEach(id=>{$(id).value=state.money[id]||0;$(id).oninput=e=>{state.money[id]=Number(e.target.value);save();};});
-      $("savingAccount").value = state.money.savingAccount || "";
-      $("savingAccount").oninput = e => { state.money.savingAccount = e.target.value; persist(); };
     }
     function statusText(status){ return status==="done" ? "완료" : status==="doing" ? "정보수집중" : "진행전"; }
     function renderTop(){
@@ -1414,17 +1428,10 @@
         <button class="stage-card ${x.id===activeStageId?"active":""}" data-stage="${x.id}">
           <strong>${x.order}</strong>
           <div><h3>${x.title}</h3><p>${x.period || "상시"} · ${x.category}</p></div>
-          <div class="stage-actions">
-            <button class="${x.status==="done"?"":"primary-mini"}" data-stage-done="${x.id}">${x.status==="done"?"취소":"완료"}</button>
-            <button data-stage-edit="${x.id}">편집</button>
-            ${x.needsCandidate ? `<button data-stage-candidate="${x.id}">+</button>` : ""}
-          </div>
+          <span class="tag ${x.status==="done"?"green":"soft"}">${statusText(x.status)}</span>
         </button>`;
       }).join("");
       document.querySelectorAll("[data-stage]").forEach(btn=>btn.onclick=()=>{ activeStageId = btn.dataset.stage; activeSubtaskIndex = 0; renderChecklist(); });
-      document.querySelectorAll("[data-stage-done]").forEach(btn=>btn.onclick=e=>{e.stopPropagation();toggleStageDone(btn.dataset.stageDone);});
-      document.querySelectorAll("[data-stage-edit]").forEach(btn=>btn.onclick=e=>{e.stopPropagation();openStep(btn.dataset.stageEdit);});
-      document.querySelectorAll("[data-stage-candidate]").forEach(btn=>btn.onclick=e=>{e.stopPropagation();addCandidateForStage(btn.dataset.stageCandidate);});
       $("activeStageMeta").innerHTML = `<span class="dot"></span>${step.order} · ${step.period || "상시"} · ${step.category}`;
       $("activeStageTitle").textContent = step.title;
       $("activeStageMemo").textContent = step.memo || "이 단계에서 확인할 내용을 적어두세요.";
@@ -1460,9 +1467,13 @@
           <div class="work-card">
             <h3>단계 요약</h3>
             <div class="bar-row"><div><span>세부 완료</span><b>${doneCount}/${step.subtasks?.length || 0}</b></div><div class="bar"><i style="--w:${pct(doneCount, step.subtasks?.length || 1)}%"></i></div></div>
-            <div class="tags" style="margin-top:14px">
-              ${step.needsCandidate ? `<span class="tag soft">후보/견적 필요</span>` : `<span class="tag">체크 중심</span>`}
-              <span class="tag ${step.status==="done"?"green":"soft"}">${statusText(step.status)}</span>
+            <div class="check-row" style="margin-top:14px">
+              <div><strong>전체 상태</strong><p style="margin-top:4px;color:var(--sub);font-size:12px">${step.needsCandidate ? "후보와 견적까지 보고 결정하는 단계" : "기록하고 체크하는 단계"}</p></div>
+              <select data-stage-status>
+                <option value="todo" ${step.status==="todo"?"selected":""}>진행전</option>
+                <option value="doing" ${step.status==="doing"?"selected":""}>정보수집중</option>
+                <option value="done" ${step.status==="done"?"selected":""}>완료</option>
+              </select>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;margin-bottom:10px">
               <h3 style="margin:0;font-size:18px">이 단계 예산</h3>
@@ -1481,7 +1492,7 @@
             </div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;margin-bottom:10px">
               <h3 style="margin:0;font-size:18px">후보</h3>
-              <span class="tag soft">${candidates.length}개</span>
+              <button class="light-btn" style="height:36px;border-radius:13px" data-add-candidate-current>후보 추가</button>
             </div>
             <div class="bar-list">
               ${candidates.length ? candidates.slice(0,4).map(item=>`
@@ -1490,7 +1501,7 @@
                   <strong>${item.name}</strong>
                   <b>${won(item.actual||item.quote||0)}</b>
                 </button>
-              `).join("") : `<div class="flow-item"><span>+</span>${step.needsCandidate ? "이 단계는 후보 비교가 중요해요. + 후보를 눌러 사진과 견적을 남겨요." : "필요할 때만 후보를 추가해요."}</div>`}
+              `).join("") : `<div class="flow-item"><span>+</span>${step.needsCandidate ? "이 단계는 후보 비교가 중요해요. 후보 추가로 사진과 견적을 남겨요." : "필요할 때만 후보를 추가해요."}</div>`}
             </div>
           </div>
         </div>
@@ -1502,6 +1513,12 @@
         step.status = done === step.subtasks.length ? "done" : step.subtasks.some(x=>x.status==="doing" || x.status==="done") ? "doing" : "todo";
         save();
       });
+      document.querySelector("[data-stage-status]")?.addEventListener("input", e => {
+        step.status = e.target.value;
+        if (step.status === "done") step.subtasks?.forEach(x=>x.status="done");
+        save();
+      });
+      document.querySelector("[data-add-candidate-current]")?.addEventListener("click", () => addCandidateForStage(step.id));
       const memoInput = document.querySelector("[data-inline-step-memo]");
       if (memoInput) memoInput.oninput = e => { step.note = e.target.value; persist(); };
       document.querySelectorAll("[data-sub-field]").forEach(input=>input.oninput=e=>{
@@ -1510,15 +1527,22 @@
         sub.fields[e.target.dataset.subField] = e.target.value;
         persist();
       });
-      document.querySelectorAll("[data-map-search]").forEach(btn=>btn.onclick=e=>{
-        const sub = step.subtasks[Number(e.currentTarget.dataset.subIndex)];
+      document.querySelectorAll("[data-address-search]").forEach(btn=>btn.onclick=e=>{
+        const index = Number(e.currentTarget.dataset.subIndex);
         const key = e.currentTarget.dataset.subField;
-        const query = (sub.fields?.[key] || "").trim();
-        if(!query){ alert("장소명을 먼저 입력해줘."); return; }
-        const url = e.currentTarget.dataset.mapSearch === "naver"
-          ? `https://map.naver.com/p/search/${encodeURIComponent(query)}`
-          : `https://map.kakao.com/link/search/${encodeURIComponent(query)}`;
-        window.open(url, "_blank");
+        if (!window.daum?.Postcode) {
+          alert("주소 검색을 불러오는 중이에요. 잠시 후 다시 눌러줘.");
+          return;
+        }
+        new daum.Postcode({
+          oncomplete(data) {
+            const sub = step.subtasks[index];
+            sub.fields ||= {};
+            sub.fields[key] = data.roadAddress || data.jibunAddress || data.address || "";
+            sub.fields.placeDetail ||= data.buildingName || "";
+            save();
+          }
+        }).open();
       });
       document.querySelectorAll("[data-inline-budget]").forEach(input=>input.oninput=e=>{const row=state.budget.find(x=>x.id===e.target.dataset.inlineBudget);row[e.target.dataset.key]=Number(e.target.value);save();});
       document.querySelector("[data-add-stage-budget]")?.addEventListener("click",()=>{state.budget.push({id:crypto.randomUUID(),stepId:step.id,category:step.category,item:`${step.title} 예산`,detail:"",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"});save();});
@@ -1565,34 +1589,38 @@
     function placeFieldHtml(item,index,key="place",label="장소/위치"){
       item.fields ||= {};
       const value = item.fields[key] || "";
-      return `<div class="step-field wide"><label>${label}</label><input value="${value}" data-sub-field="${key}" data-sub-index="${index}" placeholder="장소명을 입력하고 지도 검색"><div class="map-actions"><button type="button" data-map-search="naver" data-sub-index="${index}" data-sub-field="${key}">네이버지도</button><button type="button" data-map-search="kakao" data-sub-index="${index}" data-sub-field="${key}">카카오맵</button></div></div>`;
+      const detail = item.fields.placeDetail || "";
+      const mapQuery = [value, detail].filter(Boolean).join(" ");
+      return `<div class="step-field wide"><label>${label}</label><div class="place-row"><input value="${value}" data-sub-field="${key}" data-sub-index="${index}" placeholder="주소 검색으로 선택하거나 직접 입력"><button type="button" data-address-search data-sub-index="${index}" data-sub-field="${key}">주소 검색</button></div><input style="margin-top:7px" value="${detail}" data-sub-field="placeDetail" data-sub-index="${index}" placeholder="상세 위치: 예) 2호선 역삼역 3번 출구 도보 5분, 몇 층, 주차장 입구">${mapQuery ? `<div class="map-preview"><iframe loading="lazy" src="https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed"></iframe></div>` : ""}</div>`;
     }
     function renderSubtaskFields(step,item,index){
       const stepTitle = step.title || "";
       const itemTitle = item.title || "";
       const title = `${stepTitle} ${itemTitle}`;
       const fields = [];
-      if (/예산|견적|식대|계약금|잔금|비용|금액/.test(title)) {
+      const isCandidateWork = step.needsCandidate || /후보|투어|업체|샵|예약|구매|계약/.test(title);
+      const needsPlace = /장소|위치|웨딩홀 후보|웨딩홀 투어|스튜디오 후보|드레스 후보|메이크업 후보|숙소|매물 후보|지역\/조건|한복|예복/.test(itemTitle) || (/첫인사|상견례|웨딩홀|신혼여행|신혼집|혼주관련/.test(stepTitle) && /장소|후보|투어|숙소|지역|매물|한복|예복|메이크업/.test(itemTitle));
+      if (isCandidateWork) {
+        fields.push(fieldHtml(item,index,"candidate","후보명"));
+        fields.push(fieldHtml(item,index,"quote","견적/조건"));
+        fields.push(fieldHtml(item,index,"image","사진/자료 링크","text",true));
+      }
+      if (needsPlace) {
+        fields.push(placeFieldHtml(item,index,"place","주소/장소"));
+      }
+      if (/예산|견적|식대|계약금|잔금|비용|금액|구매|대관료|항공권|숙소/.test(title)) {
         fields.push(fieldHtml(item,index,"amount","금액","number"));
         fields.push(fieldHtml(item,index,"payment","결제/분담"));
       }
-      const needsPlace = /장소|위치|웨딩홀 후보|웨딩홀 투어|숙소|스튜디오 후보|메이크업 후보|드레스 후보|플래너 후보|헤어변형 후보|부케|한복|예복|매물 후보|지역\/조건/.test(itemTitle) || /첫인사|웨딩홀 후보와 투어|웨딩홀 계약|신혼여행|신혼집 계약|혼주관련/.test(stepTitle) && /장소|후보|숙소|지역|매물|한복|예복|메이크업/.test(itemTitle);
-      if (needsPlace) {
-        fields.push(placeFieldHtml(item,index,"place","장소/위치"));
-        fields.push(fieldHtml(item,index,"link","링크/주소"));
-      }
-      if (/후보|투어|업체|플래너|스튜디오|드레스|메이크업|헤어변형|부케|여행사|가전|가구|한복|예복/.test(title)) {
-        fields.push(fieldHtml(item,index,"candidate","후보명"));
-        fields.push(fieldHtml(item,index,"quote","견적/조건"));
-        fields.push(fieldHtml(item,index,"image","이미지/자료 링크","text",true));
-      }
-      if (/웨딩홀 후보|식대|보증인원|주차|제공|무료|동선/.test(title)) {
+      if (/웨딩홀 후보|웨딩홀 투어|식대|보증인원|주차|제공|무료|동선/.test(title)) {
         fields.push(fieldHtml(item,index,"meal","식대/보증인원"));
-        fields.push(fieldHtml(item,index,"parking","주차/동선/무료제공", "textarea", true));
+        fields.push(fieldHtml(item,index,"parking","주차/동선/제공 항목", "textarea", true));
       }
-      if (/준비물|소품|짐|사진|자료/.test(title)) fields.push(fieldHtml(item,index,"items","준비물/자료","textarea",true));
-      if (/중요내용|조건|계약|우선순위|기준|대본|식순|가안|예약|확인/.test(title)) fields.push(fieldHtml(item,index,"note","중요내용/확인사항","textarea",true));
-      if (!fields.length) fields.push(fieldHtml(item,index,"note","기록할 내용","textarea",true));
+      if (/플래너|헤어변형|여행사|영상|사회자/.test(title)) {
+        fields.push(fieldHtml(item,index,"contact","담당자/연락처"));
+      }
+      if (/준비물|소품|짐|사진|자료|시안|리스트/.test(title)) fields.push(fieldHtml(item,index,"items","준비물/자료","textarea",true));
+      fields.push(fieldHtml(item,index,"note","메모/중요내용","textarea",true));
       return fields.join("");
     }
     function renderBudget(){
@@ -1605,7 +1633,7 @@
       state.budget.forEach(x=>{ (groups[x.category || "기타"] ||= []).push(x); });
       $("budgetTable").innerHTML = Object.entries(groups).map(([category,items])=>{
         const subtotal = items.reduce((sum,x)=>sum+Number(x.actual||x.quote||0),0);
-        return `<tr class="budget-group-row"><td colspan="10">${category} <span style="float:right">${won(subtotal)}</span></td></tr>` + items.map(x=>`<tr><td><input value="${x.item||""}" data-budget="${x.id}" data-key="item"></td><td><input value="${x.detail||""}" data-budget="${x.id}" data-key="detail"></td><td><input type="number" value="${x.quote||0}" data-budget="${x.id}" data-key="quote"></td><td><input type="number" value="${x.deposit||0}" data-budget="${x.id}" data-key="deposit"></td><td><input type="number" value="${x.balance||0}" data-budget="${x.id}" data-key="balance"></td><td><input type="number" value="${x.actual||0}" data-budget="${x.id}" data-key="actual"></td><td><select data-budget="${x.id}" data-key="payment"><option ${x.payment==="미정"?"selected":""}>미정</option><option ${x.payment==="카드"?"selected":""}>카드</option><option ${x.payment==="계좌이체"?"selected":""}>계좌이체</option><option ${x.payment==="현금"?"selected":""}>현금</option></select></td><td><select data-budget="${x.id}" data-key="payer"><option ${x.payer==="공동"?"selected":""}>공동</option><option ${x.payer==="수진"?"selected":""}>수진</option><option ${x.payer==="재준"?"selected":""}>재준</option><option ${x.payer==="기타"?"selected":""}>기타</option></select></td><td><select data-budget="${x.id}" data-key="status"><option ${x.status==="예정"?"selected":""}>예정</option><option ${x.status==="진행중"?"selected":""}>진행중</option><option ${x.status==="완료"?"selected":""}>완료</option></select></td><td><button class="delete-mini" data-delete-budget="${x.id}">×</button></td></tr>`).join("");
+        return `<tr class="budget-group-row"><td colspan="10">${category} <span style="float:right">${won(subtotal)}</span></td></tr>` + items.map(x=>`<tr><td><input value="${x.item||""}" data-budget="${x.id}" data-key="item"></td><td><input value="${x.detail||""}" data-budget="${x.id}" data-key="detail"></td><td><input type="number" value="${x.quote||0}" data-budget="${x.id}" data-key="quote"></td><td><input type="number" value="${x.deposit||0}" data-budget="${x.id}" data-key="deposit"></td><td><input type="number" value="${x.balance||0}" data-budget="${x.id}" data-key="balance"></td><td><input type="number" value="${x.actual||0}" data-budget="${x.id}" data-key="actual"></td><td><select data-budget="${x.id}" data-key="payment"><option ${x.payment==="미정"?"selected":""}>미정</option><option ${x.payment==="카드"?"selected":""}>카드</option><option ${x.payment==="계좌이체"?"selected":""}>계좌이체</option><option ${x.payment==="현금"?"selected":""}>현금</option></select></td><td><select data-budget="${x.id}" data-key="payer"><option ${x.payer==="공동"?"selected":""}>공동</option><option ${x.payer==="신부"||x.payer==="수진"?"selected":""}>신부</option><option ${x.payer==="신랑"||x.payer==="재준"?"selected":""}>신랑</option><option ${x.payer==="기타"?"selected":""}>기타</option></select></td><td><select data-budget="${x.id}" data-key="status"><option ${x.status==="예정"?"selected":""}>예정</option><option ${x.status==="진행중"?"selected":""}>진행중</option><option ${x.status==="완료"?"selected":""}>완료</option></select></td><td><button class="delete-mini" data-delete-budget="${x.id}">×</button></td></tr>`).join("");
       }).join("");
       document.querySelectorAll("[data-budget]").forEach(input=>input.oninput=e=>{const row=state.budget.find(x=>x.id===e.target.dataset.budget);const key=e.target.dataset.key;row[key]=["quote","deposit","balance","actual"].includes(key)?Number(e.target.value):e.target.value;save();});
       document.querySelectorAll("[data-delete-budget]").forEach(btn=>btn.onclick=()=>{state.budget=state.budget.filter(x=>x.id!==btn.dataset.deleteBudget);save();});
@@ -1633,7 +1661,7 @@
       state.ledger.forEach(x=>{ monthly[x.month] = (monthly[x.month] || 0) + (x.type==="지출"?-Number(x.amount||0):Number(x.amount||0)); });
       const monthlyMax = Math.max(...Object.values(monthly).map(v=>Math.abs(v)),1);
       $("monthlyBars").innerHTML = Object.entries(monthly).sort().map(([label,value])=>`<div class="bar-row"><div><span>${label}</span><b>${value>=0?won(value):"-"+won(Math.abs(value))}</b></div><div class="bar"><i style="--w:${pct(Math.abs(value),monthlyMax)}%"></i></div></div>`).join("") || `<p style="color:var(--sub);font-weight:700">아직 월별 내역이 없어요.</p>`;
-      $("ledgerTable").innerHTML = state.ledger.map(x=>`<tr><td><input type="month" value="${x.month||""}" data-ledger="${x.id}" data-key="month"></td><td><input value="${x.name}" data-ledger="${x.id}" data-key="name"></td><td><input type="number" value="${x.amount}" data-ledger="${x.id}" data-key="amount"></td><td><select data-ledger="${x.id}" data-key="type"><option ${x.type==="저축"?"selected":""}>저축</option><option ${x.type==="이번달저축"?"selected":""}>이번달저축</option><option ${x.type==="지출"?"selected":""}>지출</option><option ${x.type==="수입"?"selected":""}>수입</option><option ${x.type==="이자"?"selected":""}>이자</option></select></td><td><select data-ledger="${x.id}" data-key="who"><option ${x.who==="함께"?"selected":""}>함께</option><option ${x.who==="수진"?"selected":""}>수진</option><option ${x.who==="재준"?"selected":""}>재준</option><option ${x.who==="공동"?"selected":""}>공동</option></select></td><td><input value="${x.account||""}" data-ledger="${x.id}" data-key="account" placeholder="카드/계좌"></td><td><input type="number" value="${x.interest||0}" data-ledger="${x.id}" data-key="interest"></td><td><button class="delete-mini" data-delete-ledger="${x.id}">×</button></td></tr>`).join("");
+      $("ledgerTable").innerHTML = state.ledger.map(x=>`<tr><td><input type="month" value="${x.month||""}" data-ledger="${x.id}" data-key="month"></td><td><input value="${x.name}" data-ledger="${x.id}" data-key="name"></td><td><input type="number" value="${x.amount}" data-ledger="${x.id}" data-key="amount"></td><td><select data-ledger="${x.id}" data-key="type"><option ${x.type==="저축"?"selected":""}>저축</option><option ${x.type==="이번달저축"?"selected":""}>이번달저축</option><option ${x.type==="지출"?"selected":""}>지출</option><option ${x.type==="수입"?"selected":""}>수입</option><option ${x.type==="이자"?"selected":""}>이자</option></select></td><td><select data-ledger="${x.id}" data-key="who"><option ${x.who==="함께"?"selected":""}>함께</option><option ${x.who==="신부"?"selected":""}>신부</option><option ${x.who==="신랑"?"selected":""}>신랑</option><option ${x.who==="공동"?"selected":""}>공동</option></select></td><td><input type="number" value="${x.interest||0}" data-ledger="${x.id}" data-key="interest"></td><td><button class="delete-mini" data-delete-ledger="${x.id}">×</button></td></tr>`).join("");
       document.querySelectorAll("[data-ledger]").forEach(input=>input.oninput=e=>{const row=state.ledger.find(x=>x.id===e.target.dataset.ledger);const key=e.target.dataset.key;row[key]=["amount","interest"].includes(key)?Number(e.target.value):e.target.value;save();});
       document.querySelectorAll("[data-delete-ledger]").forEach(btn=>btn.onclick=()=>{state.ledger=state.ledger.filter(x=>x.id!==btn.dataset.deleteLedger);save();});
     }
@@ -1781,7 +1809,7 @@
     $("addBudget").onclick = () => { state.budget.push({id:crypto.randomUUID(),category:"기타",item:"새 예산 항목",detail:"",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"}); save(); };
     $("addGuest").onclick = () => { state.guest.list.push({id:crypto.randomUUID(),side:"함께",relation:"",name:"새 하객 그룹",count:0,expected:"예정",invite:"미전달",actual:"미정"}); save(); };
     $("addHouse").onclick = () => { state.houses.push({id:crypto.randomUUID(),kind:"house",category:"집 후보",name:"새 집 후보",quote:0,actual:0,deposit:0,balance:0,balanceDate:"",payment:"미정",monthly:0,selected:false,memo:"",photo:""}); save(); };
-    $("addLedger").onclick = () => { state.ledger.push({id:crypto.randomUUID(),month:new Date().toISOString().slice(0,7),name:"이번달 저축",amount:0,type:"이번달저축",who:"함께",account:state.money.savingAccount||"",interest:0}); save(); };
+    $("addLedger").onclick = () => { state.ledger.push({id:crypto.randomUUID(),month:new Date().toISOString().slice(0,7),name:"이번달 저축",amount:0,type:"이번달저축",who:"함께",interest:0}); save(); };
     $("saveBtn").onclick = () => saveRemote(true);
     $("resetBtn").onclick = () => { if(confirm("샘플값으로 되돌릴까요?")){ state = structuredClone(defaults); save(); } };
     function render(){ bind(); renderTop(); renderWedding(); renderHouse(); renderMoney(); bindCards(); }
