@@ -29,7 +29,7 @@
       background:#fff;
       color:var(--ink);
       font-family:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif;
-      font-size:15px;
+      font-size:14px;
     }
     button,input,select,textarea{font:inherit;color:inherit}
     button{border:0;background:none;cursor:pointer}
@@ -180,8 +180,8 @@
       accent-color:var(--clover-deep);
     }
     .primary,.light-btn,.icon-btn{
-      height:44px;
-      border-radius:16px;
+      height:40px;
+      border-radius:14px;
       font-weight:950;
     }
     .primary{
@@ -206,11 +206,11 @@
       color:var(--text);
       box-shadow:var(--soft-shadow);
     }
-    .light-btn{padding:0 15px}
+    .light-btn{padding:0 13px}
     .icon-btn{width:44px}
     .app{
       display:grid;
-      grid-template-columns:292px minmax(0,1fr);
+      grid-template-columns:86px minmax(0,1fr);
       min-height:100vh;
       max-width:1540px;
       margin:0 auto;
@@ -219,6 +219,7 @@
     .app.sidebar-collapsed{
       grid-template-columns:86px minmax(0,1fr);
     }
+    .app.sidebar-open{grid-template-columns:240px minmax(0,1fr)}
     .sidebar{
       position:sticky;
       top:0;
@@ -284,25 +285,25 @@
       color:var(--ink);
       box-shadow:var(--soft-shadow);
     }
-    .app.sidebar-collapsed .sidebar{padding:24px 12px}
-    .app.sidebar-collapsed .brand{justify-content:center;margin-top:34px}
-    .app.sidebar-collapsed .brand>div:last-child,
-    .app.sidebar-collapsed .side-title,
-    .app.sidebar-collapsed .side-desc,
-    .app.sidebar-collapsed .side-clover,
-    .app.sidebar-collapsed .menu span{display:none}
-    .app.sidebar-collapsed .menu{left:12px;right:12px;bottom:24px}
-    .app.sidebar-collapsed .menu button{
+    .app:not(.sidebar-open) .sidebar{padding:24px 12px}
+    .app:not(.sidebar-open) .brand{justify-content:center;margin-top:34px}
+    .app:not(.sidebar-open) .brand>div:last-child,
+    .app:not(.sidebar-open) .side-title,
+    .app:not(.sidebar-open) .side-desc,
+    .app:not(.sidebar-open) .side-clover,
+    .app:not(.sidebar-open) .menu span{display:none}
+    .app:not(.sidebar-open) .menu{left:12px;right:12px;bottom:24px}
+    .app:not(.sidebar-open) .menu button{
       justify-content:center;
       padding:0;
       font-size:0;
     }
-    .app.sidebar-collapsed .menu button:before{
+    .app:not(.sidebar-open) .menu button:before{
       content:attr(data-short);
       font-size:15px;
       font-weight:950;
     }
-    .main{min-width:0;padding:24px 34px 88px}
+    .main{min-width:0;padding:22px 28px 70px}
     .topbar{
       display:flex;
       align-items:center;
@@ -335,12 +336,12 @@
       display:inline-flex;
       align-items:center;
       gap:7px;
-      height:34px;
+      height:30px;
       padding:0 12px;
       border-radius:999px;
       background:#fff;
       color:var(--clover-deep);
-      font-size:12px;
+      font-size:11px;
       font-weight:950;
       box-shadow:var(--soft-shadow);
     }
@@ -457,13 +458,13 @@
       font-weight:950;
     }
     .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px}
-    .section-head h2{font-size:32px;letter-spacing:0}
-    .section-head p{max-width:760px;margin-top:8px;color:var(--sub);line-height:1.6;font-weight:680}
+    .section-head h2{font-size:28px;letter-spacing:0}
+    .section-head p{max-width:760px;margin-top:6px;color:var(--sub);line-height:1.5;font-weight:680}
     .tabs{display:flex;gap:8px;margin:0 0 18px}
     .tabs button{
-      height:44px;
-      padding:0 18px;
-      border-radius:16px;
+      height:40px;
+      padding:0 16px;
+      border-radius:14px;
       background:#fff;
       border:1px solid var(--line);
       color:var(--sub);
@@ -495,8 +496,8 @@
     .time-node.done span{color:#dcf9dd}
     .wedding-workspace{
       display:grid;
-      grid-template-columns:360px minmax(0,1fr);
-      gap:18px;
+      grid-template-columns:330px minmax(0,1fr);
+      gap:14px;
       align-items:start;
     }
     .stage-list{
@@ -508,14 +509,20 @@
       overflow:auto;
       padding-right:4px;
     }
+    .stage-group{
+      margin:6px 2px 2px;
+      color:var(--clover-deep);
+      font-size:12px;
+      font-weight:950;
+    }
     .stage-card{
       display:grid;
-      grid-template-columns:44px minmax(0,1fr) 62px;
-      gap:12px;
+      grid-template-columns:38px minmax(0,1fr) 54px;
+      gap:10px;
       align-items:center;
-      min-height:76px;
-      padding:13px;
-      border-radius:22px;
+      min-height:62px;
+      padding:10px;
+      border-radius:18px;
       background:#fff;
       border:1px solid var(--line);
       text-align:left;
@@ -523,32 +530,33 @@
     }
     .stage-card.active{border-color:var(--clover);background:var(--clover-soft)}
     .stage-card strong{
-      width:44px;height:44px;
+      width:38px;height:38px;
       display:grid;place-items:center;
-      border-radius:16px;
+      border-radius:14px;
       background:#edf9ed;
       color:var(--clover-deep);
-      font-size:15px;
+      font-size:13px;
       font-weight:950;
     }
-    .stage-card h3{font-size:15px;line-height:1.3}
-    .stage-card p{margin-top:4px;color:var(--sub);font-size:12px;font-weight:800}
-    .stage-work{min-height:720px}
+    .stage-card h3{font-size:14px;line-height:1.25}
+    .stage-card p{margin-top:3px;color:var(--sub);font-size:11px;font-weight:800}
+    .stage-card .status{height:24px;padding:0 8px;font-size:11px}
+    .stage-work{min-height:620px}
     .stage-work-head{
       position:relative;
       overflow:hidden;
-      margin-bottom:14px;
-      padding:26px;
-      border-radius:30px;
+      margin-bottom:12px;
+      padding:20px;
+      border-radius:24px;
       background:linear-gradient(145deg,#fbfff9,#fff);
       border:1px solid var(--line);
       box-shadow:var(--soft-shadow);
     }
-    .stage-work-head h3{margin-top:8px;font-size:34px;letter-spacing:0}
-    .stage-work-head p{margin-top:10px;max-width:760px;color:var(--sub);line-height:1.65;font-weight:720}
-    .stage-work-head .mini-actions{margin-top:18px}
+    .stage-work-head h3{margin-top:8px;font-size:28px;letter-spacing:0}
+    .stage-work-head p{margin-top:8px;max-width:760px;color:var(--sub);line-height:1.55;font-weight:720}
+    .stage-work-head .mini-actions{margin-top:14px}
     .subtabs{
-      display:flex;
+      display:none;
       gap:8px;
       overflow:auto;
       padding:2px 1px 14px;
@@ -568,31 +576,51 @@
     .subtabs button.active{background:var(--clover-deep);border-color:var(--clover-deep);color:#fff}
     .subtask-pane{
       display:grid;
-      grid-template-columns:minmax(0,1fr) 320px;
-      gap:14px;
+      grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
+      gap:12px;
       align-items:start;
       margin-bottom:14px;
     }
     .work-card{
-      padding:22px;
-      border-radius:26px;
+      padding:18px;
+      border-radius:22px;
       background:#fff;
       border:1px solid var(--line);
       box-shadow:var(--soft-shadow);
     }
-    .work-card h3{font-size:21px;margin-bottom:12px}
-    .work-card p{color:var(--sub);line-height:1.65;font-weight:720}
+    .work-card h3{font-size:18px;margin-bottom:10px}
+    .work-card p{color:var(--sub);line-height:1.5;font-weight:720}
     .check-row{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:12px;
       min-height:56px;
-      padding:12px 14px;
-      border-radius:18px;
+      padding:10px 12px;
+      border-radius:16px;
       background:#fbfdfb;
       border:1px solid var(--line);
       font-weight:900;
+    }
+    .step-grid{display:grid;gap:8px}
+    .step-check{
+      display:grid;
+      grid-template-columns:24px minmax(0,1fr) 112px;
+      gap:10px;
+      align-items:center;
+      padding:9px 10px;
+      border:1px solid var(--line);
+      border-radius:15px;
+      background:#fbfdfb;
+    }
+    .step-check b{font-size:12px;color:var(--clover-deep)}
+    .step-check strong{font-size:14px}
+    .step-check select{height:34px;padding:0 8px;border-radius:12px;font-size:12px}
+    .inline-note{
+      min-height:96px;
+      margin-top:10px;
+      border-radius:15px;
+      font-size:13px;
     }
     .guest-tools{
       display:grid;
@@ -802,7 +830,7 @@
 
   <div class="app">
     <aside class="sidebar">
-      <button class="sidebar-toggle" id="sidebarToggle" title="메뉴 접기">☰</button>
+      <button class="sidebar-toggle" id="sidebarToggle" title="메뉴 열기">›</button>
       <div class="brand"><div class="jj-logo">JJ</div><div>JJ의 행복한 결혼생활<small>박수진 & 이재준</small></div></div>
       <div class="side-title">행운처럼<br>쌓이는 우리.</div>
       <p class="side-desc">결혼식, 집, 돈 모으기를 따로 보되 마지막엔 하나의 생활 자금으로 연결해요.</p>
@@ -880,20 +908,13 @@
                 <h3 id="activeStageTitle">결혼준비과정</h3>
                 <p id="activeStageMemo">왼쪽에서 단계를 선택하면 여기에서 세부작업을 채워요.</p>
                 <div class="mini-actions">
-                  <button class="primary" id="markStageDone">단계완료</button>
-                  <button class="light-btn" id="editStageOpen">단계 상세 편집</button>
-                  <button class="light-btn" id="addWedding">후보 추가</button>
+                  <button class="primary" id="markStageDone">완료</button>
+                  <button class="light-btn" id="editStageOpen">편집</button>
+                  <button class="light-btn" id="addWedding">+ 후보</button>
                 </div>
               </div>
               <div class="subtabs" id="subtaskTabs"></div>
               <div id="subtaskWork"></div>
-              <div class="work-card">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-                  <h3>이 단계 후보 스택</h3>
-                  <span class="tag soft">필요한 만큼 추가</span>
-                </div>
-                <div class="candidate-list" id="stageInlineCandidates"></div>
-              </div>
             </section>
           </div>
         </div>
@@ -1023,7 +1044,7 @@
   <script>
     const KEY = "jj-clover-wedding-v1";
     const LOGIN_ID_KEY = KEY + "-login-id";
-    const SIDEBAR_KEY = KEY + "-sidebar-collapsed";
+    const SIDEBAR_KEY = KEY + "-sidebar-open";
     const SUPABASE_URL = "https://epqnkwpmsyfeczgribxa.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwcW5rd3Btc3lmZWN6Z3JpYnhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAyNTA2NjUsImV4cCI6MjA5NTgyNjY2NX0.dvpSuUAJM3_tk9Mgsk_NxSaWvJ_YhYMKqBC1KNUtDrw";
     const fmt = new Intl.NumberFormat("ko-KR");
@@ -1261,19 +1282,18 @@
       window.scrollTo({top:0,behavior:"smooth"});
     }
     document.querySelectorAll("[data-screen]").forEach(x=>x.onclick=()=>nav(x.dataset.screen));
-    if (localStorage.getItem(SIDEBAR_KEY) === "1") document.querySelector(".app")?.classList.add("sidebar-collapsed");
+    if (localStorage.getItem(SIDEBAR_KEY) === "1") document.querySelector(".app")?.classList.add("sidebar-open");
     $("sidebarToggle").onclick = () => {
       const app = document.querySelector(".app");
-      app.classList.toggle("sidebar-collapsed");
-      const folded = app.classList.contains("sidebar-collapsed");
-      $("sidebarToggle").textContent = folded ? "›" : "☰";
-      $("sidebarToggle").title = folded ? "메뉴 열기" : "메뉴 접기";
-      localStorage.setItem(SIDEBAR_KEY, folded ? "1" : "0");
+      app.classList.toggle("sidebar-open");
+      const opened = app.classList.contains("sidebar-open");
+      $("sidebarToggle").textContent = opened ? "‹" : "›";
+      $("sidebarToggle").title = opened ? "메뉴 접기" : "메뉴 열기";
+      localStorage.setItem(SIDEBAR_KEY, opened ? "1" : "0");
     };
-    if (document.querySelector(".app")?.classList.contains("sidebar-collapsed")) {
-      $("sidebarToggle").textContent = "›";
-      $("sidebarToggle").title = "메뉴 열기";
-    }
+    const sidebarOpened = document.querySelector(".app")?.classList.contains("sidebar-open");
+    $("sidebarToggle").textContent = sidebarOpened ? "‹" : "›";
+    $("sidebarToggle").title = sidebarOpened ? "메뉴 접기" : "메뉴 열기";
     document.querySelectorAll("[data-wtab]").forEach(btn=>btn.onclick=()=>{
       document.querySelectorAll("[data-wtab]").forEach(x=>x.classList.toggle("active",x.dataset.wtab===btn.dataset.wtab));
       document.querySelectorAll("#wedding .tab-panel").forEach(x=>x.classList.remove("active"));
@@ -1328,46 +1348,51 @@
       const step = state.prep.find(x=>x.id===activeStageId) || state.prep[0];
       if (!step) return;
       activeStageId = step.id;
-      if (activeSubtaskIndex >= (step.subtasks || []).length) activeSubtaskIndex = 0;
-      $("stageList").innerHTML = state.prep.map(x=>`
+      let lastPeriod = "";
+      $("stageList").innerHTML = state.prep.map(x=>{
+        const period = x.period || "상시";
+        const head = period !== lastPeriod ? `<div class="stage-group">${period}</div>` : "";
+        lastPeriod = period;
+        return `${head}
         <button class="stage-card ${x.id===activeStageId?"active":""}" data-stage="${x.id}">
           <strong>${x.order}</strong>
           <div><h3>${x.title}</h3><p>${x.period || "상시"} · ${x.category}</p></div>
           <span class="status ${x.status}">${statusText(x.status)}</span>
-        </button>
-      `).join("");
+        </button>`;
+      }).join("");
       document.querySelectorAll("[data-stage]").forEach(btn=>btn.onclick=()=>{ activeStageId = btn.dataset.stage; activeSubtaskIndex = 0; renderChecklist(); });
       $("activeStageMeta").innerHTML = `<span class="dot"></span>${step.order} · ${step.period || "상시"} · ${step.category}`;
       $("activeStageTitle").textContent = step.title;
       $("activeStageMemo").textContent = step.memo || "이 단계에서 확인할 내용을 적어두세요.";
-      $("markStageDone").textContent = step.status === "done" ? "완료취소" : "단계완료";
+      $("markStageDone").textContent = step.status === "done" ? "취소" : "완료";
       const subtasks = step.subtasks?.length ? step.subtasks : [{title:"기본 작업",status:step.status}];
-      $("subtaskTabs").innerHTML = subtasks.map((item,index)=>`
-        <button class="${index===activeSubtaskIndex?"active":""}" data-subtab="${index}">
-          ${String(index+1).padStart(2,"0")}<br>${item.title || "세부작업"}
-        </button>
-      `).join("");
-      document.querySelectorAll("[data-subtab]").forEach(btn=>btn.onclick=()=>{ activeSubtaskIndex = Number(btn.dataset.subtab); renderChecklist(); });
-      const sub = subtasks[activeSubtaskIndex] || subtasks[0];
+      $("subtaskTabs").innerHTML = "";
       const budgetRows = relatedBudgets(step);
+      const candidates = relatedCandidates(step);
+      const doneCount = step.subtasks?.filter(x=>x.status==="done").length || 0;
       $("subtaskWork").innerHTML = `
         <div class="subtask-pane">
           <div class="work-card">
-            <h3>${sub.title || "세부작업"}</h3>
-            <p>정보를 알아보는 중이면 진행중, 끝났으면 완료로 바꿔두면 왼쪽 전체 단계에도 바로 반영돼요.</p>
-            <div class="check-row" style="margin-top:14px">
-              <span>세부작업 상태</span>
-              <select data-inline-sub-status style="max-width:160px">
-                <option value="todo" ${sub.status==="todo"?"selected":""}>예정</option>
-                <option value="doing" ${sub.status==="doing"?"selected":""}>진행중</option>
-                <option value="done" ${sub.status==="done"?"selected":""}>완료</option>
-              </select>
+            <h3>해야 할 일</h3>
+            <p>세부항목을 한 화면에서 체크하고, 필요한 내용은 바로 아래 메모에 적어요.</p>
+            <div class="step-grid" style="margin-top:12px">
+              ${subtasks.map((item,index)=>`
+                <div class="step-check">
+                  <b>${String(index+1).padStart(2,"0")}</b>
+                  <strong>${item.title || "세부작업"}</strong>
+                  <select data-inline-sub-status="${index}">
+                    <option value="todo" ${item.status==="todo"?"selected":""}>예정</option>
+                    <option value="doing" ${item.status==="doing"?"selected":""}>진행중</option>
+                    <option value="done" ${item.status==="done"?"selected":""}>완료</option>
+                  </select>
+                </div>
+              `).join("")}
             </div>
-            <div class="field" style="margin-top:12px"><label>세부 내용</label><textarea data-inline-sub-memo placeholder="장소, 예산, 준비물, 중요내용, 확인한 견적 등을 자유롭게 적어요.">${sub.memo || ""}</textarea></div>
+            <div class="field" style="margin-top:12px"><label>전체 메모</label><textarea class="inline-note" data-inline-step-memo placeholder="장소, 예산, 준비물, 중요내용, 확인한 견적 등을 자유롭게 적어요.">${step.note || ""}</textarea></div>
           </div>
           <div class="work-card">
             <h3>단계 요약</h3>
-            <div class="bar-row"><div><span>세부 완료</span><b>${step.subtasks?.filter(x=>x.status==="done").length || 0}/${step.subtasks?.length || 0}</b></div><div class="bar"><i style="--w:${pct(step.subtasks?.filter(x=>x.status==="done").length || 0, step.subtasks?.length || 1)}%"></i></div></div>
+            <div class="bar-row"><div><span>세부 완료</span><b>${doneCount}/${step.subtasks?.length || 0}</b></div><div class="bar"><i style="--w:${pct(doneCount, step.subtasks?.length || 1)}%"></i></div></div>
             <div class="tags" style="margin-top:14px">
               ${step.needsCandidate ? `<span class="tag soft">후보/견적 필요</span>` : `<span class="tag">체크 중심</span>`}
               <span class="tag ${step.status==="done"?"green":"soft"}">${statusText(step.status)}</span>
@@ -1387,21 +1412,33 @@
                 </div>
               `).join("") : `<div class="flow-item"><span>+</span>이 단계에 연결된 예산이 아직 없어요.</div>`}
             </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;margin-bottom:10px">
+              <h3 style="margin:0;font-size:18px">후보</h3>
+              <span class="tag soft">${candidates.length}개</span>
+            </div>
+            <div class="bar-list">
+              ${candidates.length ? candidates.slice(0,3).map(item=>`
+                <button class="check-row" data-open="${item.kind}:${item.id}" style="text-align:left">
+                  <span class="tag ${item.selected?"green":"soft"}">${item.selected?"선택":"후보"}</span>
+                  <strong>${item.name}</strong>
+                  <b>${won(item.actual||item.quote||0)}</b>
+                </button>
+              `).join("") : `<div class="flow-item"><span>+</span>후보 추가를 누르면 이 단계로 연결돼요.</div>`}
+            </div>
           </div>
         </div>
       `;
-      const statusInput = document.querySelector("[data-inline-sub-status]");
-      if (statusInput && step.subtasks?.[activeSubtaskIndex]) statusInput.oninput = e => {
-        step.subtasks[activeSubtaskIndex].status = e.target.value;
+      document.querySelectorAll("[data-inline-sub-status]").forEach(input=>input.oninput = e => {
+        const index = Number(e.target.dataset.inlineSubStatus);
+        step.subtasks[index].status = e.target.value;
         const done = step.subtasks.filter(x=>x.status==="done").length;
         step.status = done === step.subtasks.length ? "done" : step.subtasks.some(x=>x.status==="doing" || x.status==="done") ? "doing" : "todo";
         save();
-      };
-      const memoInput = document.querySelector("[data-inline-sub-memo]");
-      if (memoInput && step.subtasks?.[activeSubtaskIndex]) memoInput.oninput = e => { step.subtasks[activeSubtaskIndex].memo = e.target.value; persist(); };
+      });
+      const memoInput = document.querySelector("[data-inline-step-memo]");
+      if (memoInput) memoInput.oninput = e => { step.note = e.target.value; persist(); };
       document.querySelectorAll("[data-inline-budget]").forEach(input=>input.oninput=e=>{const row=state.budget.find(x=>x.id===e.target.dataset.inlineBudget);row[e.target.dataset.key]=Number(e.target.value);save();});
-      document.querySelector("[data-add-stage-budget]")?.addEventListener("click",()=>{state.budget.push({id:crypto.randomUUID(),stepId:step.id,category:step.category,item:`${step.title} 예산`,detail:sub.title||"",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"});save();});
-      $("stageInlineCandidates").innerHTML = relatedCandidates(step).length ? relatedCandidates(step).map(card).join("") : `<div class="flow-item"><span>+</span>아직 연결된 후보가 없어요. 후보 추가를 누르면 이 단계 분류로 바로 만들어져요.</div>`;
+      document.querySelector("[data-add-stage-budget]")?.addEventListener("click",()=>{state.budget.push({id:crypto.randomUUID(),stepId:step.id,category:step.category,item:`${step.title} 예산`,detail:"",quote:0,deposit:0,balance:0,actual:0,payment:"미정",payer:"공동",status:"예정"});save();});
       bindCards();
     }
     function renderGuest(){
