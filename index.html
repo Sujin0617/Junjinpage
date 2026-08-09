@@ -707,6 +707,42 @@
     .table td:last-child{border-right:1px solid var(--line);border-radius:0 16px 16px 0}
     .table tr[data-step]{cursor:pointer}
     .table tr[data-step]:hover td{background:var(--clover-soft)}
+    .budget-board{display:grid;gap:12px}
+    .budget-group-card{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:#fff;
+      overflow:hidden;
+    }
+    .budget-group-head{
+      width:100%;
+      border:0;
+      background:var(--clover-soft);
+      padding:15px 16px;
+      display:grid;
+      grid-template-columns:28px minmax(0,1fr) repeat(3,minmax(120px,160px));
+      gap:12px;
+      align-items:center;
+      text-align:left;
+      cursor:pointer;
+    }
+    .budget-group-head strong{font-size:16px}
+    .budget-group-head small{display:block;margin-top:3px;color:var(--sub);font-weight:800}
+    .budget-group-head b{display:block;font-size:15px;color:var(--clover-deep)}
+    .budget-items{display:grid;gap:8px;padding:12px}
+    .budget-row{
+      display:grid;
+      grid-template-columns:minmax(120px,1fr) minmax(150px,1.1fr) repeat(3,minmax(100px,.85fr)) 92px 84px 74px;
+      gap:8px;
+      align-items:center;
+      padding:10px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fbfbfa;
+    }
+    .budget-row input,.budget-row select{height:38px;border-radius:12px;padding:0 10px;font-size:13px}
+    .budget-row .delete-mini{width:44px;justify-self:end}
+    .budget-empty{padding:16px;color:var(--sub);font-weight:800}
     .status,.tag{
       display:inline-flex;
       align-items:center;
@@ -999,14 +1035,14 @@
         </div>
         <div class="tab-panel" id="wtab-budget">
           <div class="budget-summary">
-            <div class="stat"><span>예상 비용 합계</span><strong id="budgetQuoteTotal">0원</strong></div>
-            <div class="stat"><span>실제 비용 합계</span><strong id="budgetActualTotal">0원</strong></div>
-            <div class="stat"><span>계약금 합계</span><strong id="budgetDepositTotal">0원</strong></div>
-            <div class="stat"><span>잔금 합계</span><strong id="budgetBalanceTotal">0원</strong></div>
+            <div class="stat"><span>기존 원하는 예산</span><strong id="budgetQuoteTotal">0원</strong></div>
+            <div class="stat"><span>실제 선택금액</span><strong id="budgetChosenTotal">0원</strong></div>
+            <div class="stat"><span>실제 지출금액</span><strong id="budgetActualTotal">0원</strong></div>
+            <div class="stat"><span>남은 잔금</span><strong id="budgetBalanceTotal">0원</strong></div>
           </div>
           <div class="panel">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><h2 style="font-size:22px">결혼 예산표</h2><button class="light-btn" id="addBudget">예산 항목 추가</button></div>
-            <table class="table budget-table"><thead><tr><th>항목</th><th>상세내용</th><th>예상비용</th><th>계약금</th><th>잔금</th><th>실제비용</th><th>결제</th><th>담당</th><th>진행</th><th>삭제</th></tr></thead><tbody id="budgetTable"></tbody></table>
+            <div class="budget-board" id="budgetTable"></div>
           </div>
         </div>
       </section>
@@ -1221,6 +1257,7 @@
     let editingStep = null;
     let activeStageId = null;
     let activeSubtaskIndex = 0;
+    const closedBudgetGroups = new Set(JSON.parse(localStorage.getItem(KEY + "-closed-budget") || "[]"));
     let session = JSON.parse(localStorage.getItem(KEY + "-session") || "null");
     let saveTimer = null;
     function normalizeState(){
@@ -1624,19 +1661,47 @@
       return fields.join("");
     }
     function renderBudget(){
-      const totals = state.budget.reduce((acc,x)=>{acc.quote+=Number(x.quote||0);acc.actual+=Number(x.actual||0);acc.deposit+=Number(x.deposit||0);acc.balance+=Number(x.balance||0);return acc;},{quote:0,actual:0,deposit:0,balance:0});
+      const chosenValue = row => Number(row.actual || row.quote || 0);
+      const totals = state.budget.reduce((acc,x)=>{acc.quote+=Number(x.quote||0);acc.chosen+=chosenValue(x);acc.actual+=Number(x.actual||0);acc.deposit+=Number(x.deposit||0);acc.balance+=Number(x.balance||0);return acc;},{quote:0,chosen:0,actual:0,deposit:0,balance:0});
       $("budgetQuoteTotal").textContent = won(totals.quote);
+      $("budgetChosenTotal").textContent = won(totals.chosen);
       $("budgetActualTotal").textContent = won(totals.actual);
-      $("budgetDepositTotal").textContent = won(totals.deposit);
       $("budgetBalanceTotal").textContent = won(totals.balance);
       const groups = {};
       state.budget.forEach(x=>{ (groups[x.category || "기타"] ||= []).push(x); });
       $("budgetTable").innerHTML = Object.entries(groups).map(([category,items])=>{
-        const subtotal = items.reduce((sum,x)=>sum+Number(x.actual||x.quote||0),0);
-        return `<tr class="budget-group-row"><td colspan="10">${category} <span style="float:right">${won(subtotal)}</span></td></tr>` + items.map(x=>`<tr><td><input value="${x.item||""}" data-budget="${x.id}" data-key="item"></td><td><input value="${x.detail||""}" data-budget="${x.id}" data-key="detail"></td><td><input type="number" value="${x.quote||0}" data-budget="${x.id}" data-key="quote"></td><td><input type="number" value="${x.deposit||0}" data-budget="${x.id}" data-key="deposit"></td><td><input type="number" value="${x.balance||0}" data-budget="${x.id}" data-key="balance"></td><td><input type="number" value="${x.actual||0}" data-budget="${x.id}" data-key="actual"></td><td><select data-budget="${x.id}" data-key="payment"><option ${x.payment==="미정"?"selected":""}>미정</option><option ${x.payment==="카드"?"selected":""}>카드</option><option ${x.payment==="계좌이체"?"selected":""}>계좌이체</option><option ${x.payment==="현금"?"selected":""}>현금</option></select></td><td><select data-budget="${x.id}" data-key="payer"><option ${x.payer==="공동"?"selected":""}>공동</option><option ${x.payer==="신부"||x.payer==="수진"?"selected":""}>신부</option><option ${x.payer==="신랑"||x.payer==="재준"?"selected":""}>신랑</option><option ${x.payer==="기타"?"selected":""}>기타</option></select></td><td><select data-budget="${x.id}" data-key="status"><option ${x.status==="예정"?"selected":""}>예정</option><option ${x.status==="진행중"?"selected":""}>진행중</option><option ${x.status==="완료"?"selected":""}>완료</option></select></td><td><button class="delete-mini" data-delete-budget="${x.id}">×</button></td></tr>`).join("");
+        const sum = items.reduce((acc,x)=>{acc.quote+=Number(x.quote||0);acc.chosen+=chosenValue(x);acc.actual+=Number(x.actual||0);return acc;},{quote:0,chosen:0,actual:0});
+        const closed = closedBudgetGroups.has(category);
+        return `<section class="budget-group-card">
+          <button type="button" class="budget-group-head" data-budget-toggle="${category}">
+            <span>${closed ? "›" : "⌄"}</span>
+            <div><strong>${category}</strong><small>${items.length}개 항목</small></div>
+            <div><small>원하는 예산</small><b>${won(sum.quote)}</b></div>
+            <div><small>선택금액</small><b>${won(sum.chosen)}</b></div>
+            <div><small>실제 지출</small><b>${won(sum.actual)}</b></div>
+          </button>
+          ${closed ? "" : `<div class="budget-items">
+            ${items.map(x=>`<div class="budget-row">
+              <input value="${x.item||""}" data-budget="${x.id}" data-key="item" placeholder="항목">
+              <input value="${x.detail||""}" data-budget="${x.id}" data-key="detail" placeholder="세부내용">
+              <input type="number" value="${x.quote||0}" data-budget="${x.id}" data-key="quote" placeholder="원하는 예산">
+              <input type="number" value="${x.actual||0}" data-budget="${x.id}" data-key="actual" placeholder="실제 지출">
+              <input type="number" value="${x.deposit||0}" data-budget="${x.id}" data-key="deposit" placeholder="계약금">
+              <select data-budget="${x.id}" data-key="payment"><option ${x.payment==="미정"?"selected":""}>미정</option><option ${x.payment==="카드"?"selected":""}>카드</option><option ${x.payment==="계좌이체"?"selected":""}>계좌이체</option><option ${x.payment==="현금"?"selected":""}>현금</option></select>
+              <select data-budget="${x.id}" data-key="status"><option ${x.status==="예정"?"selected":""}>예정</option><option ${x.status==="진행중"?"selected":""}>진행중</option><option ${x.status==="완료"?"selected":""}>완료</option></select>
+              <button class="delete-mini" data-delete-budget="${x.id}">×</button>
+            </div>`).join("")}
+          </div>`}
+        </section>`;
       }).join("");
       document.querySelectorAll("[data-budget]").forEach(input=>input.oninput=e=>{const row=state.budget.find(x=>x.id===e.target.dataset.budget);const key=e.target.dataset.key;row[key]=["quote","deposit","balance","actual"].includes(key)?Number(e.target.value):e.target.value;save();});
       document.querySelectorAll("[data-delete-budget]").forEach(btn=>btn.onclick=()=>{state.budget=state.budget.filter(x=>x.id!==btn.dataset.deleteBudget);save();});
+      document.querySelectorAll("[data-budget-toggle]").forEach(btn=>btn.onclick=()=>{
+        const category = btn.dataset.budgetToggle;
+        closedBudgetGroups.has(category) ? closedBudgetGroups.delete(category) : closedBudgetGroups.add(category);
+        localStorage.setItem(KEY + "-closed-budget", JSON.stringify([...closedBudgetGroups]));
+        renderBudget();
+      });
     }
     function card(x){
       return `<button class="candidate ${x.selected?"final":""}" data-open="${x.kind}:${x.id}"><div class="thumb">${x.photo?`<img src="${x.photo}" alt="">`:x.category}</div><div><h3>${x.name}</h3><p>${x.memo||"상세 내용을 입력하세요."}</p><div class="tags"><span class="tag ${x.selected?"green":"soft"}">${x.selected?"최종 선택":"후보"}</span><span class="tag">${x.payment||"미정"}</span>${x.kind==="house"?`<span class="tag soft">${month(x.monthly||0)}</span>`:""}</div></div><div class="price">${won(x.actual||x.quote||0)}</div></button>`;
