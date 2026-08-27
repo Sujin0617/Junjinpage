@@ -1,11 +1,13 @@
-const CACHE_NAME = 'our-couple-log-v9';
+const CACHE_NAME = 'our-couple-log-v10';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/apple-touch-icon.png'
+  './icons/apple-touch-icon.png',
+  './icons/profile-sujin.png',
+  './icons/profile-jaejun.png'
 ];
 
 self.addEventListener('install', event => {
