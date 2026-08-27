@@ -1,4 +1,4 @@
-const CACHE_NAME = 'our-couple-log-v3';
+const CACHE_NAME = 'our-couple-log-v8';
 const APP_SHELL = [
   './',
   './index.html',
@@ -34,11 +34,29 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req).then(resp => {
+        const clone = resp.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put('./index.html', clone));
+        return resp;
+      }).catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
   event.respondWith(
-    caches.match(req).then(cached => cached || fetch(req).then(resp => {
+    fetch(req).then(resp => {
       const clone = resp.clone();
       caches.open(CACHE_NAME).then(cache => cache.put(req, clone));
       return resp;
-    }))
+    }).catch(() => caches.match(req))
   );
+});
+
+
+self.addEventListener('message', event => {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
