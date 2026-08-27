@@ -1,4 +1,4 @@
-const CACHE_NAME = 'our-couple-log-v14';
+const CACHE_NAME = 'our-couple-log-v16';
 const APP_SHELL = [
   './',
   './index.html',
